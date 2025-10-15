@@ -1,10 +1,16 @@
-body {
+html, body {
   margin: 0;
   padding: 0;
+  height: 100%;
   background: #000;
+  overflow: hidden;
+  font-family: sans-serif;
+  user-select: none;
 }
 
 canvas {
   display: block;
   margin: 0 auto;
+  width: 100vw;
+  height: 100vh;
 }
