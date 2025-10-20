@@ -1,16 +1,1348 @@
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  background: #000;
-  overflow: hidden;
-  font-family: sans-serif;
-  user-select: none;
+/* INSTRUCCIONES PARA MIT APP INVENTOR */
+/*
+Para usar esta aplicación en MIT App Inventor:
+1. Crea un componente WebViewer en tu aplicación
+2. En la propiedad "HomeUrl", pega el contenido completo de este archivo HTML
+3. Asegúrate de que el WebViewer tenga dimensiones adecuadas (ancho y alto al 100%)
+4. La aplicación funcionará completamente offline
+*/
+
+/* Variables CSS minimalistas con colores del logo */
+:root {
+    --bg-color: #1a1a1a;
+    --text-color: #ffffff;
+    --accent-color: #4dabf7;
+    --accent-color-secondary: #3a8bc8;
+    --secondary-color: #2a2a2a;
+    --card-bg: #2d2d2d;
+    --card-border: #404040;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --shadow-glow: rgba(77, 171, 247, 0.3);
+    --glow-color: rgba(77, 171, 247, 0.3);
+    --transition-speed: 0.3s;
+    --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --border-radius: 8px;
+    --success-color: #4caf50;
+    --warning-color: #ff9800;
+    --error-color: #f44336;
+    --transition-fast: 0.3s;
 }
 
-canvas {
-  display: block;
-  margin: 0 auto;
-  width: 100vw;
-  height: 100vh;
+.light-mode {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --accent-color: #4dabf7;
+    --secondary-color: #f0f0f0;
+    --card-bg: #ffffff;
+    --card-border: #e0e0e0;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-primary);
+    background: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    transition: background var(--transition-speed), color var(--transition-speed);
+    font-weight: 400;
+}
+
+/* Encabezado y navegación */
+header {
+    background: var(--secondary-color);
+    padding: 1.5rem 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 4px var(--shadow-color);
+    border-bottom: 1px solid var(--card-border);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.75rem 1.5rem;
+    gap: 1rem;
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--card-border);
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.logo {
+    font-size: 1.7rem;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+.logo:hover {
+    color: var(--accent-color);
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav li {
+    margin-left: 1.5rem;
+}
+
+nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+nav a:hover {
+    background-color: var(--accent-color);
+    color: #ffffff;
+}
+
+.theme-toggle {
+    background: linear-gradient(135deg, var(--secondary-color), var(--card-bg));
+    border: 1px solid rgba(77, 171, 247, 0.3);
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    border-radius: var(--border-radius);
+    transition: all var(--transition-fast);
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.theme-toggle:hover {
+    background: linear-gradient(135deg, var(--accent-color), var(--accent-color-secondary));
+    color: #ffffff;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px var(--shadow-glow);
+}
+
+/* Botón hamburguesa */
+.hamburger-menu {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    padding: 10px;
+    background: none;
+    border: none;
+}
+
+.hamburger-line {
+    width: 25px;
+    height: 3px;
+    background: var(--text-color);
+    margin: 3px 0;
+    transition: 0.3s;
+    border-radius: 2px;
+}
+
+/* Menú hamburguesa activo */
+.hamburger-menu.active .hamburger-line:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.hamburger-menu.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger-menu.active .hamburger-line:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -6px);
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Secciones */
+section {
+    min-height: 80vh;
+    padding: 2rem 0;
+    display: none;
+}
+
+section.active {
+    display: block;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h1, h2, h3 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+h2 {
+    font-size: 2rem;
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+h3 {
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+/* Página de inicio */
+.hero {
+    text-align: center;
+    padding: 4rem 0;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 10px rgba(77, 171, 247, 0.7);
+}
+
+.hero p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+}
+
+.section-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+}
+
+.section-button {
+    background-color: var(--card-bg);
+    border: none;
+    border-radius: 8px;
+    padding: 1.5rem;
+    color: var(--text-color);
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed), background-color var(--transition-speed);
+    box-shadow: 0 4px 6px var(--shadow-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.section-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, var(--glow-color), transparent);
+    transition: left 0.5s;
+}
+
+.section-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px var(--shadow-color);
+}
+
+.section-button:hover::before {
+    left: 100%;
+}
+
+/* Tarjetas de satélites */
+.satellites-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.satellite-card {
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed), filter var(--transition-speed);
+    box-shadow: 0 4px 8px var(--shadow-color);
+    cursor: pointer;
+    position: relative;
+}
+
+.satellite-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent, var(--glow-color), transparent);
+    opacity: 0;
+    transition: opacity var(--transition-speed);
+    border-radius: 10px;
+    z-index: 1;
+}
+
+.satellite-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 10px 20px var(--shadow-color);
+    filter: brightness(1.1);
+}
+
+.satellite-card:hover::before {
+    opacity: 0.3;
+}
+
+.satellite-image {
+    width: 100%;
+    height: 180px;
+    background-size: cover;
+    background-position: center;
+}
+
+.satellite-content {
+    padding: 1.5rem;
+}
+
+.satellite-content h3 {
+    margin-bottom: 0.5rem;
+}
+
+.satellite-details {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--transition-speed);
+}
+
+.satellite-card.expanded .satellite-details {
+    max-height: 500px;
+}
+
+/* Línea de tiempo */
+.timeline-container {
+    position: relative;
+    max-width: 800px;
+    margin: 3rem auto;
+}
+
+.timeline {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: var(--accent-color);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 2rem;
+    padding-left: 2rem;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--accent-color);
+}
+
+.timeline-year {
+    font-weight: bold;
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+}
+
+.timeline-content {
+    background-color: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px var(--shadow-color);
+}
+
+/* Quiz */
+.quiz-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 4px 10px var(--shadow-color);
+}
+
+.question {
+    margin-bottom: 1.5rem;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.option {
+    background-color: var(--secondary-color);
+    border: none;
+    border-radius: 6px;
+    padding: 1rem;
+    color: var(--text-color);
+    text-align: left;
+    cursor: pointer;
+    transition: background-color var(--transition-speed);
+}
+
+.option:hover {
+    background-color: var(--accent-color);
+}
+
+.option.selected {
+    background-color: var(--accent-color);
+}
+
+.feedback {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 6px;
+    display: none;
+}
+
+.feedback.correct {
+    background-color: rgba(76, 175, 80, 0.2);
+    border: 1px solid #4caf50;
+    display: block;
+}
+
+.feedback.incorrect {
+    background-color: rgba(244, 67, 54, 0.2);
+    border: 1px solid #f44336;
+    display: block;
+}
+
+.quiz-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+.quiz-nav button {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.7rem 1.5rem;
+    cursor: pointer;
+    transition: background-color var(--transition-speed);
+}
+
+.quiz-nav button:hover {
+    background-color: #3a8bc8;
+}
+
+.quiz-nav button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+
+.results {
+    text-align: center;
+    padding: 2rem;
+}
+
+.score {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+}
+
+.message {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+}
+
+/* Mapa estelar */
+.star-map-container {
+    text-align: center;
+}
+
+.star-map {
+    max-width: 100%;
+    height: auto;
+    margin: 2rem 0;
+}
+
+.constellation-area {
+    cursor: pointer;
+    transition: fill 0.3s;
+}
+
+.constellation-area:hover {
+    fill: rgba(77, 171, 247, 0.3);
+}
+
+.constellation-info {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    padding: 1.5rem;
+    max-width: 500px;
+    margin: 0 auto;
+    box-shadow: 0 4px 10px var(--shadow-color);
+    display: none;
+}
+
+.constellation-info.active {
+    display: block;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Tooltip flotante para estrellas */
+.star-tooltip {
+    position: absolute;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    font-size: 0.85rem;
+    line-height: 1.4;
+    z-index: 1000;
+    pointer-events: none;
+    max-width: 200px;
+    word-wrap: break-word;
+    display: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Contenedor del canvas del mapa estelar */
+.star-map-canvas-container {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    height: 650px;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px var(--shadow-color);
+}
+
+/* NUEVAS SECCIONES AÑADIDAS */
+
+/* Galería */
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.gallery-item {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px var(--shadow-color);
+    cursor: pointer;
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.gallery-item:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 16px var(--shadow-color), 0 0 20px var(--glow-color);
+}
+
+.gallery-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: filter var(--transition-speed);
+}
+
+.gallery-item:hover .gallery-image {
+    filter: brightness(1.1);
+}
+
+.gallery-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6));
+    color: #ffffff;
+    padding: 0.75rem 0.5rem;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+    transform: translateY(100%);
+    transition: transform var(--transition-speed);
+}
+
+.gallery-item:hover .gallery-caption {
+    transform: translateY(0);
+}
+
+/* Simulador de Órbitas */
+.orbit-simulator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.orbit-canvas-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    height: 70vh;
+    min-height: 400px;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px var(--shadow-color);
+}
+
+#orbitCanvas {
+    width: 100%;
+    height: 100%;
+    background-color: var(--secondary-color);
+}
+
+.orbit-controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.orbit-controls button {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color var(--transition-speed);
+}
+
+.orbit-controls button:hover {
+    background-color: #3a8bc8;
+}
+
+.planet-info {
+    background-color: var(--card-bg);
+    padding: 1rem;
+    border-radius: 8px;
+    max-width: 600px;
+    margin-top: 1rem;
+    box-shadow: 0 4px 6px var(--shadow-color);
+}
+
+.planet-panels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    max-width: 1200px;
+    margin-top: 20px;
+}
+
+.orbit-planet-panel {
+    background-color: var(--card-bg);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px var(--shadow-color);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: none;
+    max-width: 300px;
+    transition: all 0.3s ease;
+}
+
+.orbit-planet-panel.active {
+    display: block;
+    animation: fadeInPanel 0.5s ease;
+}
+
+.orbit-planet-panel h3 {
+    color: var(--accent-color);
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.orbit-planet-panel p {
+    color: var(--text-color);
+    margin: 5px 0;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.orbit-planet-panel strong {
+    color: #ffd700;
+}
+
+@keyframes fadeInPanel {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Calculadora de Peso en Planetas */
+.weight-calculator {
+    max-width: 500px;
+    margin: 2rem auto;
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 4px 10px var(--shadow-color);
+}
+
+.calculator-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 0.5rem;
+}
+
+.form-group input, .form-group select {
+    padding: 0.7rem;
+    border: 1px solid var(--secondary-color);
+    border-radius: 4px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.calculate-btn {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.8rem;
+    cursor: pointer;
+    transition: background-color var(--transition-speed);
+    margin-top: 1rem;
+}
+
+.calculate-btn:hover {
+    background-color: #3a8bc8;
+}
+
+.calculator-result {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border-radius: 6px;
+    background-color: var(--secondary-color);
+    display: none;
+}
+
+.calculator-result.active {
+    display: block;
+}
+
+/* Glosario */
+.glossary-container {
+    max-width: 800px;
+    margin: 2rem auto;
+}
+
+.glossary-search {
+    margin-bottom: 2rem;
+}
+
+.glossary-search input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--secondary-color);
+    border-radius: 4px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.glossary-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.glossary-item {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px var(--shadow-color);
+}
+
+.glossary-term {
+    font-weight: bold;
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+}
+
+/* Control de música */
+.music-control {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--secondary-color);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 2px 10px var(--shadow-color);
+    z-index: 100;
+}
+
+/* Notificaciones */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 1rem 1.5rem;
+    border-radius: 6px;
+    background-color: var(--card-bg);
+    box-shadow: 0 4px 12px var(--shadow-color);
+    z-index: 1000;
+    transform: translateX(150%);
+    transition: transform 0.3s ease-in-out;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification.success {
+    border-left: 4px solid var(--success-color);
+}
+
+.notification.warning {
+    border-left: 4px solid var(--warning-color);
+}
+
+.notification.error {
+    border-left: 4px solid var(--error-color);
+}
+
+/* Panel de información de planetas */
+.planet-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    padding: 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    display: none;
+    animation: slideIn 0.3s ease-out;
+}
+
+.planet-panel.active {
+    display: block;
+}
+
+.planet-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.planet-panel-header h3 {
+    color: var(--accent-color);
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.close-panel {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+.close-panel:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.planet-panel-content {
+    padding: 1.5rem;
+}
+
+.planet-description {
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.planet-facts h4 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.planet-facts ul {
+    list-style: none;
+    padding: 0;
+}
+
+.planet-facts li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-color);
+}
+
+.planet-facts li:last-child {
+    border-bottom: none;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* Pie de página */
+footer {
+    background-color: var(--secondary-color);
+    padding: 2rem;
+    text-align: center;
+    margin-top: 4rem;
+}
+
+.footer-logo {
+    width: 60px;
+    height: auto;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.credits {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    /* Navegación móvil */
+    .nav-container {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 0.5rem;
+    }
+
+    nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    nav li {
+        margin: 0.25rem;
+    }
+
+    nav a {
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    /* Header más compacto */
+    header {
+        padding: 0.5rem;
+    }
+
+    .logo {
+        font-size: 1.2rem;
+    }
+
+    /* Contenedor principal */
+    .container {
+        padding: 1rem;
+    }
+
+    /* Hero section */
+    .hero {
+        padding: 2rem 0;
+    }
+
+    .hero h1 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+        padding: 0 1rem;
+    }
+
+    /* Botones de sección */
+    .section-buttons {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-top: 2rem;
+        padding: 0 1rem;
+    }
+
+    .section-button {
+        padding: 1.25rem 1rem;
+        font-size: 1rem;
+    }
+
+    /* Tarjetas de satélites */
+    .satellites-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .satellite-card {
+        margin: 0 0.5rem;
+    }
+
+    /* Timeline */
+    .timeline-container {
+        margin: 2rem 1rem;
+        padding-left: 1rem;
+    }
+
+    .timeline-item {
+        padding-left: 1.5rem;
+    }
+
+    /* Quiz */
+    .quiz-container {
+        margin: 0 1rem;
+        padding: 1.5rem;
+    }
+
+    .quiz-nav {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .quiz-nav button {
+        padding: 0.8rem 1rem;
+        font-size: 1rem;
+    }
+
+    /* Mapa estelar */
+    .star-map-container {
+        padding: 0 1rem;
+    }
+
+    .constellation-info {
+        margin: 1rem;
+        padding: 1rem;
+    }
+
+    /* Galería */
+    .gallery-container {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 1rem;
+        padding: 0 1rem;
+    }
+
+    .gallery-item {
+        margin: 0;
+    }
+
+    /* Simulador de órbitas */
+    .orbit-simulator {
+        padding: 0 1rem;
+    }
+
+    .orbit-canvas-container {
+        height: 350px;
+        margin-bottom: 1rem;
+    }
+
+    .orbit-controls {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .orbit-controls button {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+        min-width: 80px;
+    }
+
+    /* Panel de planetas */
+    .planet-panel {
+        width: 95%;
+        max-width: none;
+        margin: 1rem;
+        padding: 0;
+        max-height: 90vh;
+    }
+
+    .planet-panel-header {
+        padding: 1rem;
+    }
+
+    .planet-panel-header h3 {
+        font-size: 1.3rem;
+    }
+
+    .planet-panel-content {
+        padding: 1rem;
+    }
+
+    .planet-description {
+        font-size: 0.95rem;
+    }
+
+    .planet-facts li {
+        font-size: 0.9rem;
+        padding: 0.4rem 0;
+    }
+
+    /* Calculadora de peso */
+    .weight-calculator {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+
+    .calculator-form {
+        gap: 0.8rem;
+    }
+
+    .form-group input,
+    .form-group select {
+        padding: 0.8rem;
+        font-size: 1rem;
+    }
+
+    .calculate-btn {
+        padding: 0.9rem;
+        font-size: 1rem;
+    }
+
+    /* Glosario */
+    .glossary-container {
+        margin: 1rem;
+    }
+
+    .glossary-search input {
+        padding: 0.9rem;
+        font-size: 1rem;
+    }
+
+    .glossary-item {
+        padding: 1rem;
+    }
+
+    /* Notificaciones */
+    .notification {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        width: auto;
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    /* Control de música */
+    .music-control {
+        bottom: 15px;
+        right: 15px;
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+    }
+
+    /* Footer */
+    footer {
+        padding: 1.5rem 1rem;
+        margin-top: 2rem;
+    }
+
+    .credits {
+        font-size: 0.9rem;
+    }
+}
+
+/* Mejoras adicionales para móviles */
+@media (max-width: 480px) {
+    /* Ajustes para pantallas muy pequeñas */
+    .container {
+        padding: 0.5rem;
+    }
+
+    .hero h1 {
+        font-size: 1.5rem;
+    }
+
+    .hero p {
+        font-size: 0.95rem;
+    }
+
+    .section-button {
+        padding: 1rem 0.8rem;
+        font-size: 0.95rem;
+    }
+
+    .satellite-content {
+        padding: 1rem;
+    }
+
+    .satellite-content h3 {
+        font-size: 1.1rem;
+    }
+
+    .timeline-content {
+        padding: 1rem;
+    }
+
+    .quiz-container {
+        padding: 1rem;
+    }
+
+    .option {
+        padding: 0.8rem;
+        font-size: 0.95rem;
+    }
+
+    .gallery-container {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+
+    .orbit-canvas-container {
+        height: 280px;
+    }
+
+    .planet-panel {
+        width: 98%;
+        margin: 0.5rem;
+    }
+
+    .weight-calculator {
+        margin: 0.5rem;
+        padding: 1rem;
+    }
+
+    .glossary-container {
+        margin: 0.5rem;
+    }
+}
+
+/* Ajustes para tablets */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .container {
+        padding: 1.5rem;
+    }
+
+    .section-buttons {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .satellites-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .gallery-container {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    .orbit-canvas-container {
+        height: 400px;
+        max-width: 700px;
+    }
+}
+
+/* Ajustes de touch para móviles */
+@media (hover: none) and (pointer: coarse) {
+    /* Aumentar áreas táctiles */
+    nav a,
+    .section-button,
+    .satellite-card,
+    .option,
+    .quiz-nav button,
+    .orbit-controls button,
+    .calculate-btn,
+    .gallery-item,
+    .constellation-area {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    /* Mejorar feedback táctil */
+    .section-button:active,
+    .satellite-card:active,
+    .option:active,
+    .quiz-nav button:active,
+    .orbit-controls button:active,
+    .calculate-btn:active {
+        transform: scale(0.98);
+        transition: transform 0.1s;
+    }
+
+    /* Ajustes para scroll */
+    .planet-panel {
+        max-height: 85vh;
+    }
+
+    /* Mejorar legibilidad */
+    body {
+        font-size: 16px;
+        line-height: 1.5;
+    }
+
+    /* Ajustes para inputs */
+    input, select, textarea {
+        font-size: 16px; /* Previene zoom en iOS */
+    }
 }
