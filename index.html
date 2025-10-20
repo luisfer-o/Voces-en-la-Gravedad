@@ -1,13 +1,1428 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Voces en la Gravedad</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aplicación educativa interactiva sobre astronomía y exploración espacial. Descubre satélites, historia, quiz, mapa estelar, simulador de órbitas y más con contenido detallado y accesible.">
+    <meta name="keywords" content="astronomía, espacio, satélites, planetas, exploración espacial, educación, quiz, mapa estelar, simulador órbitas">
+    <meta name="author" content="Explora el Espacio">
+    <meta property="og:title" content="Explora el Espacio - Aplicación Educativa de Astronomía">
+    <meta property="og:description" content="Descubre los misterios del universo con esta aplicación educativa sobre astronomía y exploración espacial.">
+    <meta property="og:image" content="https://example.com/space-app-preview.jpg">
+    <meta property="og:url" content="https://exploraespacio.com">
+    <meta property="og:type" content="website">
+    <title>Explora el Espacio - Aplicación Educativa de Astronomía</title>
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+    <link rel="preload" href="script.js" as="script">
+    <script src="script.js" defer></script>
+    <audio id="backgroundMusic" loop preload="none">
+        <source src="https://www.soundjay.com/misc/sounds/space-ambience-01.wav" type="audio/wav">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
 </head>
 <body>
-  <script src="scripts.js"></script>
+    <!-- Fondo con efecto parallax -->
+    <div class="parallax-bg">
+        <div class="stars"></div>
+    </div>
+
+    <!-- Encabezado con navegación -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">Explora el Espacio</div>
+            <button class="hamburger-menu" id="hamburgerMenu" aria-label="Abrir menú de navegación">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="#" data-section="inicio" aria-label="Ir a la sección de inicio">Inicio</a></li>
+                    <li><a href="#" data-section="satelites" aria-label="Ir a la sección de satélites">Satélites</a></li>
+                    <li><a href="#" data-section="historia" aria-label="Ir a la sección de historia">Historia</a></li>
+                    <li><a href="#" data-section="quiz" aria-label="Ir a la sección de quiz">Quiz</a></li>
+                    <li><a href="#" data-section="mapa" aria-label="Ir a la sección de mapa estelar">Mapa Estelar</a></li>
+                    <li><a href="#" data-section="galeria" aria-label="Ir a la sección de galería">Galería</a></li>
+                    <li><a href="#" data-section="orbita" aria-label="Ir a la sección de simulador">Simulador</a></li>
+                    <li><a href="#" data-section="calculadora" aria-label="Ir a la sección de calculadora">Calculadora</a></li>
+                    <li><a href="#" data-section="glosario" aria-label="Ir a la sección de glosario">Glosario</a></li>
+                </ul>
+            </nav>
+            <button class="theme-toggle" id="themeToggle" aria-label="Cambiar entre modo claro y oscuro">🌙</button>
+            <button class="music-control" id="musicControl" aria-label="Controlar música de fondo">🔊</button>
+        </div>
+    </header>
+
+    <!-- Contenedor principal -->
+    <div class="container">
+        <!-- Sección de Inicio -->
+        <section id="inicio" class="active">
+            <div class="hero">
+                <h1>Explora el Espacio</h1>
+                <p>Descubre los misterios del universo con esta aplicación educativa sobre astronomía y exploración espacial</p>
+                <div class="section-buttons">
+                    <button class="section-button" data-section="satelites">Tipos de Satélites</button>
+                    <button class="section-button" data-section="historia">Historia Espacial</button>
+                    <button class="section-button" data-section="quiz">Quiz Espacial</button>
+                    <button class="section-button" data-section="mapa">Mapa Estelar</button>
+                    <button class="section-button" data-section="galeria">Galería Espacial</button>
+                    <button class="section-button" data-section="orbita">Simulador de Órbitas</button>
+                    <button class="section-button" data-section="calculadora">Calculadora Planetaria</button>
+                    <button class="section-button" data-section="glosario">Glosario Espacial</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Satélites -->
+        <section id="satelites">
+            <h2>Tipos de Satélites</h2>
+            <div class="satellites-grid">
+                <div class="satellite-card">
+                    <div class="satellite-image bg-satellite bg-comunicacion" aria-label="Imagen de satélite de comunicación geoestacionario" role="img"></div>
+                    <div class="satellite-content">
+                        <h3>Satélites de Comunicación</h3>
+                        <p>Transmiten señales de radio, televisión, teléfono e internet a largas distancias. Son esenciales para la conectividad global y la difusión de información en tiempo real.</p>
+                        <div class="satellite-details">
+                            <p><strong>Ejemplos:</strong> Intelsat, Iridium, Starlink, Eutelsat</p>
+                            <p><strong>Órbita:</strong> Geoestacionaria (35,786 km) o Baja Tierra (LEO) para constelaciones</p>
+                            <p><strong>Aplicaciones:</strong> Televisión digital, internet de banda ancha, telefonía móvil, comunicaciones militares</p>
+                            <p><strong>Ventajas:</strong> Cobertura global, alta capacidad de datos, independencia de infraestructura terrestre</p>
+                            <p><strong>Desventajas:</strong> Alta latencia en órbitas geoestacionarias, vulnerabilidad a interferencias solares</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="satellite-card">
+                    <div class="satellite-image bg-satellite bg-meteorologico" aria-label="Imagen de satélite meteorológico con antenas" role="img"></div>
+                    <div class="satellite-content">
+                        <h3>Satélites Meteorológicos</h3>
+                        <p>Monitorean el clima y proveen datos para pronósticos meteorológicos.</p>
+                        <div class="satellite-details">
+                            <p><strong>Ejemplos:</strong> GOES, Meteosat, NOAA</p>
+                            <p><strong>Órbita:</strong> Polar o Geoestacionaria</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="satellite-card">
+                    <div class="satellite-image" style="background-image: url('imagenes/Navegacion.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de satélite de navegación GPS" role="img"></div>
+                    <div class="satellite-content">
+                        <h3>Satélites de Navegación</h3>
+                        <p>Proveen señales globales para posicionamiento, navegación y medición de tiempo.</p>
+                        <div class="satellite-details">
+                            <p><strong>Ejemplos:</strong> GPS, GLONASS, Galileo</p>
+                            <p><strong>Órbita:</strong> Media Tierra (20,000 km)</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="satellite-card">
+                    <div class="satellite-image" style="background-image: url('imagenes/Cientifico.jpg'); background-size: cover; background-position: center;" aria-label="Imagen del telescopio espacial Hubble" role="img"></div>
+                    <div class="satellite-content">
+                        <h3>Satélites Científicos</h3>
+                        <p>Realizan investigaciones sobre la Tierra, el sistema solar y el universo.</p>
+                        <div class="satellite-details">
+                            <p><strong>Ejemplos:</strong> Hubble, James Webb, Voyager</p>
+                            <p><strong>Órbita:</strong> Variable según misión</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="satellite-card">
+                    <div class="satellite-image" style="background-image: url('imagenes/Reconocimiento.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de satélite de reconocimiento militar" role="img"></div>
+                    <div class="satellite-content">
+                        <h3>Satélites de Reconocimiento</h3>
+                        <p>Utilizados para observación terrestre, vigilancia y recopilación de inteligencia.</p>
+                        <div class="satellite-details">
+                            <p><strong>Ejemplos:</strong> Keyhole (KH), Lacrosse, Onyx</p>
+                            <p><strong>Órbita:</strong> Baja Tierra (LEO, 300-1,500 km)</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="satellite-card">
+                    <div class="satellite-image" style="background-image: url('imagenes/Observacion.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de satélite de observación terrestre" role="img"></div>
+                    <div class="satellite-content">
+                        <h3>Satélites de Observación Terrestre</h3>
+                        <p>Monitorean la superficie de la Tierra para cartografía, agricultura y medio ambiente.</p>
+                        <div class="satellite-details">
+                            <p><strong>Ejemplos:</strong> Landsat, Sentinel, Terra</p>
+                            <p><strong>Órbita:</strong> Polar (700-800 km)</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="satellite-card">
+                    <div class="satellite-image" style="background-image: url('imagenes/Militar.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de satélite militar con antenas" role="img"></div>
+                    <div class="satellite-content">
+                        <h3>Satélites Militares</h3>
+                        <p>Diseñados para comunicaciones seguras, navegación y defensa estratégica.</p>
+                        <div class="satellite-details">
+                            <p><strong>Ejemplos:</strong> DSP, SBIRS, MUOS</p>
+                            <p><strong>Órbita:</strong> Geoestacionaria o Media</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="satellite-card">
+                    <div class="satellite-image" style="background-image: url('imagenes/Pruebas_Tecnologias.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de CubeSat pequeño en órbita" role="img"></div>
+                    <div class="satellite-content">
+                        <h3>Satélites de Pruebas Tecnológicas</h3>
+                        <p>Prototipos para probar nuevas tecnologías antes de su implementación en satélites operativos.</p>
+                        <div class="satellite-details">
+                            <p><strong>Ejemplos:</strong> CubeSats, TechDemoSat</p>
+                            <p><strong>Órbita:</strong> Baja Tierra (LEO)</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="satellite-card">
+                    <div class="satellite-image" style="background-image: url('imagenes/Teledireccion.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de satélite de teledetección con sensores" role="img"></div>
+                    <div class="satellite-content">
+                        <h3>Satélites de Teledetección</h3>
+                        <p>Equipados con sensores remotos para recopilar datos sobre la superficie terrestre, océanos y atmósfera.</p>
+                        <div class="satellite-details">
+                            <p><strong>Ejemplos:</strong> Landsat, SPOT, IKONOS, RADARSAT, Envisat</p>
+                            <p><strong>Órbita:</strong> Baja Tierra (LEO, 500-1,000 km)</p>
+                            <p><strong>Órbita Detallada:</strong> Órbitas polares o heliosincrónicas para cobertura sistemática de la Tierra.</p>
+                            <p><strong>Aplicaciones:</strong> Cartografía, agricultura de precisión, gestión de recursos naturales, monitoreo ambiental, oceanografía</p>
+                            <p><strong>Ventajas:</strong> Datos sinópticos de grandes áreas, capacidad multiespectral, independencia de acceso terrestre</p>
+                            <p><strong>Desventajas:</strong> Limitado por cobertura nubosa, resolución espacial vs. frecuencia temporal, procesamiento complejo de datos</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="satellite-card">
+                    <div class="satellite-image" style="background-image: url('imagenes/Cubesat.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de CubeSat estandarizado" role="img"></div>
+                    <div class="satellite-content">
+                        <h3>Satélites CubeSat</h3>
+                        <p>Satélites pequeños y estandarizados, a menudo utilizados para educación, investigación y demostraciones tecnológicas.</p>
+                        <div class="satellite-details">
+                            <p><strong>Ejemplos:</strong> CubeSat de la NASA, Planet Labs, Flock-1, QB50</p>
+                            <p><strong>Órbita:</strong> Baja Tierra (LEO, 400-1,200 km)</p>
+                            <p><strong>Órbita Detallada:</strong> Órbitas circulares o elípticas, a menudo desplegadas desde la ISS o lanzadores secundarios.</p>
+                            <p><strong>Aplicaciones:</strong> Educación universitaria, investigación atmosférica, demostración de tecnologías, constelaciones de bajo costo</p>
+                            <p><strong>Ventajas:</strong> Bajo costo (menos de $100,000), desarrollo rápido (meses), estandarización modular, acceso democratizado al espacio</p>
+                            <p><strong>Desventajas:</strong> Vida útil corta (meses a años), capacidad limitada, vulnerabilidad a radiación, dependencia de lanzadores primarios</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="satellite-card">
+                    <div class="satellite-image" style="background-image: url('imagenes/Constelacion.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de constelación de satélites en órbita" role="img"></div>
+                    <div class="satellite-content">
+                        <h3>Satélites de Constelación</h3>
+                        <p>Grupos grandes de satélites que trabajan juntos para proporcionar cobertura global continua.</p>
+                        <div class="satellite-details">
+                            <p><strong>Ejemplos:</strong> Starlink (SpaceX), OneWeb, Iridium NEXT, Globalstar, Orbcomm</p>
+                            <p><strong>Órbita:</strong> Baja Tierra (LEO, 500-1,200 km)</p>
+                            <p><strong>Órbita Detallada:</strong> Múltiples planos orbitales con satélites distribuidos para cobertura continua, altitudes optimizadas para baja latencia.</p>
+                            <p><strong>Aplicaciones:</strong> Internet de banda ancha global, comunicaciones IoT, navegación complementaria, monitoreo ambiental distribuido</p>
+                            <p><strong>Ventajas:</strong> Cobertura global ininterrumpida, baja latencia, escalabilidad, redundancia</p>
+                            <p><strong>Desventajas:</strong> Complejidad de gestión de constelación, interferencias entre satélites, proliferación de basura espacial, altos costos iniciales</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="satellite-card">
+                    <div class="satellite-image" style="background-image: url('imagenes/Busqueda_Rescate.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de satélite de búsqueda y rescate con antenas de comunicación" role="img"></div>
+                    <div class="satellite-content">
+                        <h3>Satélites de Búsqueda y Rescate</h3>
+                        <p>Diseñados para detectar señales de emergencia y coordinar operaciones de rescate en todo el mundo.</p>
+                        <div class="satellite-details">
+                            <p><strong>Ejemplos:</strong> COSPAS-SARSAT, Galileo (servicio SAR), GPS con capacidades SAR</p>
+                            <p><strong>Órbita:</strong> Media Tierra (20,000 km) o Baja Tierra (LEO)</p>
+                            <p><strong>Aplicaciones:</strong> Detección de balizas de emergencia, coordinación de rescates marítimos y terrestres, seguimiento de aeronaves en peligro</p>
+                            <p><strong>Ventajas:</strong> Cobertura global, respuesta rápida, independencia de infraestructura terrestre</p>
+                            <p><strong>Desventajas:</strong> Dependencia de balizas activas, limitaciones en áreas remotas sin cobertura de retransmisión</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="satellite-card">
+                    <div class="satellite-image" style="background-image: url('imagenes/Radioaficionado.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de satélite de radioaficionados con antenas direccionales" role="img"></div>
+                    <div class="satellite-content">
+                        <h3>Satélites de Radioaficionados</h3>
+                        <p>Satélites construidos y operados por radioaficionados para comunicaciones experimentales y educación.</p>
+                        <div class="satellite-details">
+                            <p><strong>Ejemplos:</strong> AMSAT-OSCAR, CubeSats amateurs, ISS con transpondedores de radio</p>
+                            <p><strong>Órbita:</strong> Baja Tierra (LEO, 400-1,200 km)</p>
+                            <p><strong>Aplicaciones:</strong> Comunicaciones de voz y datos, experimentos educativos, seguimiento orbital, pruebas de tecnologías</p>
+                            <p><strong>Ventajas:</strong> Bajo costo, acceso democratizado al espacio, promoción de la educación STEM</p>
+                            <p><strong>Desventajas:</strong> Vida útil corta, capacidad limitada, interferencias potenciales con sistemas comerciales</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="satellite-card">
+                    <div class="satellite-image" style="background-image: url('imagenes/Observacion.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de satélite de monitoreo ambiental observando la Tierra" role="img"></div>
+                    <div class="satellite-content">
+                        <h3>Satélites de Monitoreo Ambiental</h3>
+                        <p>Especializados en el seguimiento continuo de parámetros ambientales y cambios climáticos.</p>
+                        <div class="satellite-details">
+                            <p><strong>Ejemplos:</strong> SMAP (Soil Moisture), OCO-2 (CO2), Jason (nivel del mar)</p>
+                            <p><strong>Órbita:</strong> Baja Tierra (LEO, 600-800 km) o Polar</p>
+                            <p><strong>Aplicaciones:</strong> Monitoreo de humedad del suelo, concentración de gases, nivel del mar, deforestación, calidad del aire</p>
+                            <p><strong>Ventajas:</strong> Datos globales continuos, alta precisión, soporte para políticas ambientales</p>
+                            <p><strong>Desventajas:</strong> Costos elevados de desarrollo, dependencia de calibración precisa, limitaciones por cobertura nubosa</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="satellite-card">
+                    <div class="satellite-image" style="background-image: url('imagenes/Comunicacion.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de satélite de difusión televisiva con antenas parabólicas" role="img"></div>
+                    <div class="satellite-content">
+                        <h3>Satélites de Difusión</h3>
+                        <p>Dedicados a la transmisión de señales de televisión, radio y multimedia a gran escala.</p>
+                        <div class="satellite-details">
+                            <p><strong>Ejemplos:</strong> Astra, Eutelsat, Intelsat para broadcasting, DIRECTV, DISH Network</p>
+                            <p><strong>Órbita:</strong> Geoestacionaria (35,786 km)</p>
+                            <p><strong>Aplicaciones:</strong> Televisión digital, radio satelital, distribución de contenido multimedia, servicios de streaming</p>
+                            <p><strong>Ventajas:</strong> Alcance masivo, calidad de señal consistente, cobertura regional amplia</p>
+                            <p><strong>Desventajas:</strong> Alta latencia, vulnerabilidad a interferencias, competencia con servicios terrestres y por cable</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="satellite-card">
+                    <div class="satellite-image" style="background-image: url('imagenes/Investigacion_Atmosferica.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de satélite de investigación atmosférica midiendo composición del aire" role="img"></div>
+                    <div class="satellite-content">
+                        <h3>Satélites de Investigación Atmosférica</h3>
+                        <p>Equipados con instrumentos avanzados para estudiar la composición y dinámica de la atmósfera terrestre.</p>
+                        <div class="satellite-details">
+                            <p><strong>Ejemplos:</strong> Aura (NASA), MetOp, CALIPSO, CloudSat</p>
+                            <p><strong>Órbita:</strong> Baja Tierra (LEO, 700-800 km) o Polar</p>
+                            <p><strong>Aplicaciones:</strong> Monitoreo de ozono, aerosoles, nubes, gases de efecto invernadero, patrones de viento</p>
+                            <p><strong>Ventajas:</strong> Datos globales sinópticos, alta resolución temporal, soporte para modelos climáticos</p>
+                            <p><strong>Desventajas:</strong> Complejidad instrumental, costos elevados, necesidad de calibración continua</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="satellite-card">
+                    <div class="satellite-image" style="background-image: url('imagenes/Meteorologico.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de satélite de monitoreo climático observando patrones globales" role="img"></div>
+                    <div class="satellite-content">
+                        <h3>Satélites de Monitoreo Climático</h3>
+                        <p>Proporcionan datos continuos sobre variables climáticas para entender y predecir cambios climáticos.</p>
+                        <div class="satellite-details">
+                            <p><strong>Ejemplos:</strong> GOES-R series, Himawari, Fengyun, INSAT</p>
+                            <p><strong>Órbita:</strong> Geoestacionaria o Polar</p>
+                            <p><strong>Aplicaciones:</strong> Pronósticos meteorológicos, seguimiento de huracanes, monitoreo de temperaturas oceánicas, alertas de desastres</p>
+                            <p><strong>Ventajas:</strong> Cobertura continua, alta frecuencia de observación, datos en tiempo real</p>
+                            <p><strong>Desventajas:</strong> Limitado por resolución espacial, dependencia de condiciones de visibilidad, costos operativos altos</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="satellite-card">
+                    <div class="satellite-image" style="background-image: url('imagenes/Monitoreo_Basura_Espacial.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de satélite de monitoreo de basura espacial detectando debris" role="img"></div>
+                    <div class="satellite-content">
+                        <h3>Satélites de Monitoreo de Basura Espacial</h3>
+                        <p>Rastrean y catalogan objetos en órbita para prevenir colisiones y gestionar la basura espacial.</p>
+                        <div class="satellite-details">
+                            <p><strong>Ejemplos:</strong> Space Surveillance Network, Space Situational Awareness, NEOSSat</p>
+                            <p><strong>Órbita:</strong> Baja Tierra (LEO) o Geoestacionaria</p>
+                            <p><strong>Aplicaciones:</strong> Seguimiento de debris orbital, predicción de colisiones, planificación de maniobras evasivas, gestión del espacio</p>
+                            <p><strong>Ventajas:</strong> Mejora la seguridad orbital, soporte para operaciones espaciales sostenibles</p>
+                            <p><strong>Desventajas:</strong> Desafíos en el seguimiento de objetos pequeños, necesidad de cooperación internacional</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Historia -->
+        <section id="historia">
+            <h2>Historia de la Exploración Espacial</h2>
+            <div class="timeline-container">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">1957</div>
+                        <div class="timeline-content">
+                            <h3>Sputnik 1</h3>
+                            <p>La Unión Soviética lanza el primer satélite artificial de la historia, marcando el inicio de la era espacial.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1958</div>
+                        <div class="timeline-content">
+                            <h3>Explorer 1</h3>
+                            <p>Estados Unidos lanza su primer satélite, el Explorer 1, que descubre los cinturones de radiación de Van Allen.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1961</div>
+                        <div class="timeline-content">
+                            <h3>Yuri Gagarin</h3>
+                            <p>Primer ser humano en viajar al espacio exterior a bordo de la nave Vostok 1.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1962</div>
+                        <div class="timeline-content">
+                            <h3>John Glenn</h3>
+                            <p>Primer estadounidense en orbitar la Tierra a bordo de la Friendship 7.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1963</div>
+                        <div class="timeline-content">
+                            <h3>Valentina Tereshkova</h3>
+                            <p>Primera mujer en el espacio, orbitando la Tierra en la nave Vostok 6.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1965</div>
+                        <div class="timeline-content">
+                            <h3>Ed White - Primera Caminata Espacial</h3>
+                            <p>Primer estadounidense en realizar una caminata espacial durante la misión Gemini 4.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1966</div>
+                        <div class="timeline-content">
+                            <h3>Luna 9</h3>
+                            <p>Primera sonda en aterrizar suavemente en la Luna y transmitir imágenes desde su superficie.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1967</div>
+                        <div class="timeline-content">
+                            <h3>Tratado del Espacio Exterior</h3>
+                            <p>Firmado por Estados Unidos, Unión Soviética y Reino Unido, establece principios para el uso pacífico del espacio.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1969</div>
+                        <div class="timeline-content">
+                            <h3>Apolo 11</h3>
+                            <p>Neil Armstrong y Buzz Aldrin se convierten en los primeros humanos en caminar sobre la Luna.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1970</div>
+                        <div class="timeline-content">
+                            <h3>Apolo 13</h3>
+                            <p>Misión que sufrió una explosión pero regresó a salvo gracias a la ingeniería innovadora de la tripulación.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1971</div>
+                        <div class="timeline-content">
+                            <h3>Salyut 1</h3>
+                            <p>Primera estación espacial permanente, lanzada por la Unión Soviética.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1972</div>
+                        <div class="timeline-content">
+                            <h3>Apolo 17</h3>
+                            <p>Última misión tripulada a la Luna, con Eugene Cernan como el último hombre en pisar la superficie lunar.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1975</div>
+                        <div class="timeline-content">
+                            <h3>Apolo-Soyuz</h3>
+                            <p>Primer proyecto conjunto entre Estados Unidos y la Unión Soviética, con el acoplamiento de las naves Apolo y Soyuz.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1977</div>
+                        <div class="timeline-content">
+                            <h3>Voyager Golden Record</h3>
+                            <p>Las sondas Voyager llevan un mensaje para posibles civilizaciones extraterrestres con sonidos e imágenes de la Tierra.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1981</div>
+                        <div class="timeline-content">
+                            <h3>Columbia STS-1</h3>
+                            <p>Primer vuelo del transbordador espacial Columbia, marcando el inicio del programa de transbordadores de la NASA.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1986</div>
+                        <div class="timeline-content">
+                            <h3>Challenger STS-51L</h3>
+                            <p>Accidente del transbordador Challenger que resultó en la pérdida de siete astronautas y una pausa en el programa.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1990</div>
+                        <div class="timeline-content">
+                            <h3>Telescopio Espacial Hubble</h3>
+                            <p>Lanzado al espacio, revolucionando nuestra comprensión del universo con imágenes de alta resolución.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1995</div>
+                        <div class="timeline-content">
+                            <h3>Galileo llega a Júpiter</h3>
+                            <p>La sonda Galileo entra en órbita alrededor de Júpiter, estudiando el planeta y sus lunas por ocho años.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1998</div>
+                        <div class="timeline-content">
+                            <h3>Estación Espacial Internacional</h3>
+                            <p>Comienza la construcción de la EEI, el mayor proyecto de cooperación internacional en el espacio.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2003</div>
+                        <div class="timeline-content">
+                            <h3>Columbia STS-107</h3>
+                            <p>Accidente del transbordador Columbia durante el reingreso a la atmósfera, resultando en la pérdida de siete astronautas.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2004</div>
+                        <div class="timeline-content">
+                            <h3>Rover Spirit y Opportunity</h3>
+                            <p>Dos rovers gemelos aterrizan en Marte, explorando el planeta rojo por más de una década.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2011</div>
+                        <div class="timeline-content">
+                            <h3>Curiosity Rover</h3>
+                            <p>El rover Curiosity aterriza en el cráter Gale de Marte, equipado con instrumentos avanzados para estudiar el planeta.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2012</div>
+                        <div class="timeline-content">
+                            <h3>Fin del Programa de Transbordadores</h3>
+                            <p>El último vuelo del transbordador Atlantis marca el fin de 30 años del programa de transbordadores espaciales.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2015</div>
+                        <div class="timeline-content">
+                            <h3>New Horizons en Plutón</h3>
+                            <p>La sonda New Horizons sobrevuela Plutón, proporcionando las primeras imágenes detalladas del planeta enano.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2018</div>
+                        <div class="timeline-content">
+                            <h3>InSight en Marte</h3>
+                            <p>La sonda InSight aterriza en Marte para estudiar el interior del planeta con un sismómetro.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2020</div>
+                        <div class="timeline-content">
+                            <h3>Telescopio Espacial James Webb</h3>
+                            <p>Lanzado exitosamente, el sucesor del Hubble observa el universo en infrarrojo para estudiar galaxias distantes.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2021</div>
+                        <div class="timeline-content">
+                            <h3>Perseverance en Marte</h3>
+                            <p>El rover Perseverance aterriza en Marte para buscar signos de vida antigua y recolectar muestras.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2022</div>
+                        <div class="timeline-content">
+                            <h3>Artemis I</h3>
+                            <p>Primera misión del programa Artemis, vuelo de prueba sin tripulación alrededor de la Luna.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2023</div>
+                        <div class="timeline-content">
+                            <h3>James Webb observa galaxias antiguas</h3>
+                            <p>El telescopio James Webb captura imágenes de las galaxias más distantes jamás vistas, formadas poco después del Big Bang.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2024</div>
+                        <div class="timeline-content">
+                            <h3>Starship y Super Heavy</h3>
+                            <p>SpaceX realiza el primer vuelo integrado exitoso de Starship y Super Heavy, un paso hacia la colonización de Marte.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Quiz -->
+        <section id="quiz">
+            <h2>Quiz Espacial</h2>
+            <div class="quiz-container">
+                <div class="question" id="question1">
+                    <h3>Pregunta 1: ¿Cuál fue el primer satélite artificial?</h3>
+                    <div class="options">
+                        <button class="option" data-correct="true">Sputnik 1</button>
+                        <button class="option">Explorer 1</button>
+                        <button class="option">Vanguard 1</button>
+                        <button class="option">Telstar 1</button>
+                    </div>
+                    <div class="feedback correct">¡Correcto! Sputnik 1 fue lanzado por la Unión Soviética en 1957.</div>
+                    <div class="feedback incorrect">Incorrecto. La respuesta correcta es Sputnik 1.</div>
+                </div>
+                <div class="question" id="question2" style="display: none;">
+                    <h3>Pregunta 2: ¿Quién fue el primer ser humano en el espacio?</h3>
+                    <div class="options">
+                        <button class="option">Neil Armstrong</button>
+                        <button class="option" data-correct="true">Yuri Gagarin</button>
+                        <button class="option">Alan Shepard</button>
+                        <button class="option">John Glenn</button>
+                    </div>
+                    <div class="feedback correct">¡Correcto! Yuri Gagarin orbitó la Tierra en 1961.</div>
+                    <div class="feedback incorrect">Incorrecto. La respuesta correcta es Yuri Gagarin.</div>
+                </div>
+                <div class="question" id="question3" style="display: none;">
+                    <h3>Pregunta 3: ¿En qué año el hombre llegó a la Luna?</h3>
+                    <div class="options">
+                        <button class="option">1965</button>
+                        <button class="option">1967</button>
+                        <button class="option" data-correct="true">1969</button>
+                        <button class="option">1971</button>
+                    </div>
+                    <div class="feedback correct">¡Correcto! La misión Apolo 11 llegó a la Luna en 1969.</div>
+                    <div class="feedback incorrect">Incorrecto. La respuesta correcta es 1969.</div>
+                </div>
+                <div class="question" id="question4" style="display: none;">
+                    <h3>Pregunta 4: ¿Qué telescopio espacial fue lanzado en 1990?</h3>
+                    <div class="options">
+                        <button class="option" data-correct="true">Hubble</button>
+                        <button class="option">James Webb</button>
+                        <button class="option">Chandra</button>
+                        <button class="option">Spitzer</button>
+                    </div>
+                    <div class="feedback correct">¡Correcto! El telescopio Hubble fue lanzado en 1990.</div>
+                    <div class="feedback incorrect">Incorrecto. La respuesta correcta es el telescopio Hubble.</div>
+                </div>
+                <div class="question" id="question5" style="display: none;">
+                    <h3>Pregunta 5: ¿Qué planeta es conocido como el "planeta rojo"?</h3>
+                    <div class="options">
+                        <button class="option">Júpiter</button>
+                        <button class="option">Venus</button>
+                        <button class="option" data-correct="true">Marte</button>
+                        <button class="option">Saturno</button>
+                    </div>
+                    <div class="feedback correct">¡Correcto! Marte es conocido como el planeta rojo debido a su color.</div>
+                    <div class="feedback incorrect">Incorrecto. La respuesta correcta es Marte.</div>
+                </div>
+                <div class="question" id="question6" style="display: none;">
+                    <h3>Pregunta 6: ¿Cuál es el planeta más grande del sistema solar?</h3>
+                    <div class="options">
+                        <button class="option">Saturno</button>
+                        <button class="option" data-correct="true">Júpiter</button>
+                        <button class="option">Neptuno</button>
+                        <button class="option">Urano</button>
+                    </div>
+                    <div class="feedback correct">¡Correcto! Júpiter es el planeta más grande del sistema solar.</div>
+                    <div class="feedback incorrect">Incorrecto. La respuesta correcta es Júpiter.</div>
+                </div>
+                <div class="question" id="question7" style="display: none;">
+                    <h3>Pregunta 7: ¿Qué es un agujero negro?</h3>
+                    <div class="options">
+                        <button class="option">Una estrella muy brillante</button>
+                        <button class="option">Una región del espacio con gravedad extrema</button>
+                        <button class="option" data-correct="true">Una región del espacio donde la gravedad es tan fuerte que nada puede escapar</button>
+                        <button class="option">Un tipo de nebulosa</button>
+                    </div>
+                    <div class="feedback correct">¡Correcto! Un agujero negro es una región donde la gravedad es tan intensa que nada puede escapar.</div>
+                    <div class="feedback incorrect">Incorrecto. Un agujero negro es una región del espacio con gravedad extrema.</div>
+                </div>
+                <div class="question" id="question8" style="display: none;">
+                    <h3>Pregunta 8: ¿Cuántos planetas hay en el sistema solar?</h3>
+                    <div class="options">
+                        <button class="option">7</button>
+                        <button class="option">9</button>
+                        <button class="option" data-correct="true">8</button>
+                        <button class="option">10</button>
+                    </div>
+                    <div class="feedback correct">¡Correcto! Hay 8 planetas en el sistema solar.</div>
+                    <div class="feedback incorrect">Incorrecto. La respuesta correcta es 8.</div>
+                </div>
+                <div class="question" id="question9" style="display: none;">
+                    <h3>Pregunta 9: ¿Qué satélite natural orbita alrededor de la Tierra?</h3>
+                    <div class="options">
+                        <button class="option">Fobos</button>
+                        <button class="option">Europa</button>
+                        <button class="option" data-correct="true">Luna</button>
+                        <button class="option">Titán</button>
+                    </div>
+                    <div class="feedback correct">¡Correcto! La Luna es el satélite natural de la Tierra.</div>
+                    <div class="feedback incorrect">Incorrecto. La respuesta correcta es la Luna.</div>
+                </div>
+                <div class="question" id="question10" style="display: none;">
+                    <h3>Pregunta 10: ¿Cuál es la galaxia más cercana a la Vía Láctea?</h3>
+                    <div class="options">
+                        <button class="option">Galaxia del Sombrero</button>
+                        <button class="option" data-correct="true">Galaxia de Andrómeda</button>
+                        <button class="option">Galaxia del Triángulo</button>
+                        <button class="option">Galaxia NGC 1300</button>
+                    </div>
+                    <div class="feedback correct">¡Correcto! La Galaxia de Andrómeda es la más cercana a la Vía Láctea.</div>
+                    <div class="feedback incorrect">Incorrecto. La respuesta correcta es la Galaxia de Andrómeda.</div>
+                </div>
+                <div class="results" style="display: none;">
+                    <h3>Resultados del Quiz</h3>
+                    <div class="score">Puntuación: <span id="score">0</span>/10</div>
+                    <div class="message" id="message"></div>
+                    <button id="restartQuiz">Reiniciar Quiz</button>
+                </div>
+                <div class="quiz-nav">
+                    <button id="prevQuestion" disabled>Anterior</button>
+                    <button id="nextQuestion">Siguiente</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Mapa Estelar -->
+        <section id="mapa">
+            <h2>Mapa Estelar Interactivo</h2>
+            <div class="star-map-container">
+                <p>Explora las constelaciones del cielo nocturno con este mapa estelar avanzado. Usa los controles para navegar, buscar y personalizar tu experiencia.</p>
+
+                <!-- Controles del mapa -->
+                <div class="star-map-controls">
+                    <div class="control-group">
+                        <button id="zoom-in" class="control-btn" title="Acercar">🔍+</button>
+                        <button id="zoom-out" class="control-btn" title="Alejar">🔍-</button>
+                        <button id="reset-view" class="control-btn" title="Vista inicial">🏠</button>
+                    </div>
+                    <div class="control-group">
+                        <button id="toggle-night-mode" class="control-btn" title="Modo día/noche">🌙</button>
+                        <button id="toggle-constellations" class="control-btn active" title="Mostrar constelaciones">⭐</button>
+                        <button id="toggle-stars" class="control-btn active" title="Mostrar estrellas">✨</button>
+                    </div>
+                    <div class="control-group">
+                        <select id="season-selector" class="control-select">
+                            <option value="all">Todas las estaciones</option>
+                            <option value="winter">Invierno</option>
+                            <option value="spring">Primavera</option>
+                            <option value="summer">Verano</option>
+                            <option value="autumn">Otoño</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <input type="text" id="constellation-search" placeholder="Buscar constelación..." class="control-input">
+                    </div>
+                </div>
+
+                <!-- Canvas del mapa estelar -->
+                <div class="star-map-canvas-container">
+                    <canvas id="starMapCanvas"></canvas>
+                    <div class="loading-indicator" id="loading-indicator">
+                        <div class="spinner"></div>
+                        <p>Cargando mapa estelar...</p>
+                    </div>
+                </div>
+
+                <!-- Información de constelación -->
+                <div class="constellation-info" id="constellation-info">
+                    <div class="constellation-header">
+                        <h3 id="constellation-name">Selecciona una constelación</h3>
+                        <div class="constellation-coords" id="constellation-coords"></div>
+                    </div>
+                    <div class="constellation-details">
+                        <p id="constellation-description">Haz clic en una constelación o estrella para ver más información.</p>
+                        <div class="constellation-facts" id="constellation-facts"></div>
+                    </div>
+                </div>
+
+                <!-- Tooltip flotante -->
+                <div class="star-tooltip" id="star-tooltip"></div>
+            </div>
+        </section>
+
+        <!-- NUEVAS SECCIONES AÑADIDAS -->
+
+        <!-- Sección de Galería -->
+        <section id="galeria">
+            <h2>Galería Espacial Interactiva</h2>
+            <p>Explora impresionantes imágenes del universo organizadas por categorías con descripciones detalladas. Usa los filtros para navegar fácilmente.</p>
+
+            <!-- Controles de la galería -->
+            <div class="gallery-controls">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">Todas</button>
+                    <button class="filter-btn" data-filter="nebulosas">Nebulosas</button>
+                    <button class="filter-btn" data-filter="galaxias">Galaxias</button>
+                    <button class="filter-btn" data-filter="planetas">Planetas</button>
+                    <button class="filter-btn" data-filter="satelites">Satélites</button>
+                    <button class="filter-btn" data-filter="estrellas">Estrellas</button>
+                    <button class="filter-btn" data-filter="agujeros-negros">Agujeros Negros</button>
+                    <button class="filter-btn" data-filter="cometas">Cometas</button>
+                    <button class="filter-btn" data-filter="asteroides">Asteroides</button>
+                    <button class="filter-btn" data-filter="fenomenos">Fenómenos Cósmicos</button>
+                </div>
+                <div class="search-container">
+                    <input type="text" id="gallery-search" placeholder="Buscar en la galería..." class="gallery-search-input">
+                </div>
+            </div>
+
+            <!-- Nebulosas -->
+            <div class="gallery-category" data-category="nebulosas">
+                <h3>Nebulosas</h3>
+                <div class="gallery-container">
+                    <div class="gallery-item" data-title="Nebulosa del Águila" data-description="La Nebulosa del Águila (M16) es una región de formación estelar en la constelación de la Serpiente. Conocida por sus 'pilares de creación', donde nacen nuevas estrellas. Se encuentra a unos 7,000 años luz de la Tierra y es un laboratorio natural para estudiar el nacimiento de estrellas masivas.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Nebulosa_Aguila.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de la Nebulosa del Águila, región de formación estelar" role="img"></div>
+                        <div class="gallery-caption">Nebulosa del Águila</div>
+                        <div class="gallery-description">La Nebulosa del Águila (M16) es una región de formación estelar en la constelación de la Serpiente. Conocida por sus "pilares de creación", donde nacen nuevas estrellas. Se encuentra a unos 7,000 años luz de la Tierra y es un laboratorio natural para estudiar el nacimiento de estrellas masivas.</div>
+                    </div>
+                    <div class="gallery-item" data-title="Nebulosa de Orión" data-description="La Nebulosa de Orión (M42) es la nebulosa difusa más brillante del cielo nocturno, visible a simple vista. Es una región de formación estelar activa a 1,344 años luz de distancia, donde se forman estrellas jóvenes que iluminan el gas circundante con su radiación ultravioleta.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Nebulosa_Orion.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de la Nebulosa de Orión, nebulosa difusa brillante" role="img"></div>
+                        <div class="gallery-caption">Nebulosa de Orión</div>
+                        <div class="gallery-description">La Nebulosa de Orión (M42) es la nebulosa difusa más brillante del cielo nocturno, visible a simple vista. Es una región de formación estelar activa a 1,344 años luz de distancia, donde se forman estrellas jóvenes que iluminan el gas circundante con su radiación ultravioleta.</div>
+                    </div>
+                    <div class="gallery-item" data-title="Nebulosa de la Laguna" data-description="La Nebulosa de la Laguna (M8) es una nube gigante de gas y polvo interestelar en la constelación de Sagitario. Es una región de formación estelar masiva con varios cúmulos estelares jóvenes y una nebulosa de emisión brillante.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Nebulosa_Laguna.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de la Nebulosa de la Laguna, región de formación estelar masiva" role="img"></div>
+                        <div class="gallery-caption">Nebulosa de la Laguna</div>
+                        <div class="gallery-description">La Nebulosa de la Laguna (M8) es una nube gigante de gas y polvo interestelar en la constelación de Sagitario. Es una región de formación estelar masiva con varios cúmulos estelares jóvenes y una nebulosa de emisión brillante.</div>
+                    </div>
+                    <div class="gallery-item" data-title="Nebulosa de la Hélice" data-description="La Nebulosa de la Hélice (NGC 7293) es una nebulosa planetaria en la constelación de Acuario. Es el remanente de una estrella similar al Sol que ha agotado su combustible nuclear, expulsando sus capas exteriores al espacio.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Nebulosa_Helice.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de la Nebulosa de la Hélice, nebulosa planetaria" role="img"></div>
+                        <div class="gallery-caption">Nebulosa de la Hélice</div>
+                        <div class="gallery-description">La Nebulosa de la Hélice (NGC 7293) es una nebulosa planetaria en la constelación de Acuario. Es el remanente de una estrella similar al Sol que ha agotado su combustible nuclear, expulsando sus capas exteriores al espacio.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Galaxias -->
+            <div class="gallery-category" data-category="galaxias">
+                <h3>Galaxias</h3>
+                <div class="gallery-container">
+                    <div class="gallery-item" data-title="Galaxia de Andrómeda" data-description="La Galaxia de Andrómeda (M31) es la galaxia espiral más cercana a la Vía Láctea, ubicada a 2.5 millones de años luz. Es el objeto más distante visible a simple vista y se espera que colisione con nuestra galaxia en unos 4,000 millones de años, formando una galaxia elíptica gigante.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Galaxia_Andromeda.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de la Galaxia de Andrómeda, galaxia espiral cercana" role="img"></div>
+                        <div class="gallery-caption">Galaxia de Andrómeda</div>
+                        <div class="gallery-description">La Galaxia de Andrómeda (M31) es la galaxia espiral más cercana a la Vía Láctea, ubicada a 2.5 millones de años luz. Es el objeto más distante visible a simple vista y se espera que colisione con nuestra galaxia en unos 4,000 millones de años, formando una galaxia elíptica gigante.</div>
+                    </div>
+                    <div class="gallery-item" data-title="Galaxia del Sombrero" data-description="La Galaxia del Sombrero (M104) es una galaxia espiral en la constelación de Virgo. Su apariencia distintiva se debe a un gran disco de polvo que la hace parecer un sombrero. Es una de las galaxias más masivas cercanas a la Vía Láctea.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Galaxia_Sombrero.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de la Galaxia del Sombrero, galaxia espiral masiva" role="img"></div>
+                        <div class="gallery-caption">Galaxia del Sombrero</div>
+                        <div class="gallery-description">La Galaxia del Sombrero (M104) es una galaxia espiral en la constelación de Virgo. Su apariencia distintiva se debe a un gran disco de polvo que la hace parecer un sombrero. Es una de las galaxias más masivas cercanas a la Vía Láctea.</div>
+                    </div>
+                    <div class="gallery-item" data-title="Galaxia del Remolino" data-description="La Galaxia del Remolino (M51) es una galaxia espiral grandiosa en la constelación de Canes Venatici. Es famosa por sus brazos espirales bien definidos y por interactuar gravitacionalmente con una galaxia compañera más pequeña.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Galaxia_Remolino.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de la Galaxia del Remolino, galaxia espiral grandiosa" role="img"></div>
+                        <div class="gallery-caption">Galaxia del Remolino</div>
+                        <div class="gallery-description">La Galaxia del Remolino (M51) es una galaxia espiral grandiosa en la constelación de Canes Venatici. Es famosa por sus brazos espirales bien definidos y por interactuar gravitacionalmente con una galaxia compañera más pequeña.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Planetas -->
+            <div class="gallery-category" data-category="planetas">
+                <h3>Planetas</h3>
+                <div class="gallery-container">
+                    <div class="gallery-item" data-title="Planeta Júpiter" data-description="Júpiter es el planeta más grande del sistema solar, un gigante gaseoso compuesto principalmente de hidrógeno y helio. Tiene al menos 95 lunas, incluyendo las cuatro galileanas, y es famoso por su Gran Mancha Roja, una tormenta anticiclónica más grande que la Tierra que ha durado siglos.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Jupiter.jpg'); background-size: cover; background-position: center;" aria-label="Imagen del planeta Júpiter con su Gran Mancha Roja" role="img"></div>
+                        <div class="gallery-caption">Planeta Júpiter</div>
+                        <div class="gallery-description">Júpiter es el planeta más grande del sistema solar, un gigante gaseoso compuesto principalmente de hidrógeno y helio. Tiene al menos 95 lunas, incluyendo las cuatro galileanas, y es famoso por su Gran Mancha Roja, una tormenta anticiclónica más grande que la Tierra que ha durado siglos.</div>
+                    </div>
+                    <div class="gallery-item" data-title="Planeta Saturno" data-description="Saturno es el sexto planeta desde el Sol y es conocido por sus espectaculares anillos compuestos de hielo y roca. Es un gigante gaseoso con al menos 146 lunas, siendo Titán la más grande y la única con una atmósfera densa.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Saturno.jpg'); background-size: cover; background-position: center;" aria-label="Imagen del planeta Saturno con sus anillos" role="img"></div>
+                        <div class="gallery-caption">Planeta Saturno</div>
+                        <div class="gallery-description">Saturno es el sexto planeta desde el Sol y es conocido por sus espectaculares anillos compuestos de hielo y roca. Es un gigante gaseoso con al menos 146 lunas, siendo Titán la más grande y la única con una atmósfera densa.</div>
+                    </div>
+                    <div class="gallery-item" data-title="Planeta Marte" data-description="Marte es el cuarto planeta desde el Sol, conocido como el 'planeta rojo' debido a su color característico causado por el óxido de hierro en su superficie. Tiene la montaña más alta del sistema solar, Olympus Mons, y evidencia de agua líquida en el pasado.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Marte.jpg'); background-size: cover; background-position: center;" aria-label="Imagen del planeta Marte, superficie rocosa" role="img"></div>
+                        <div class="gallery-caption">Planeta Marte</div>
+                        <div class="gallery-description">Marte es el cuarto planeta desde el Sol, conocido como el 'planeta rojo' debido a su color característico causado por el óxido de hierro en su superficie. Tiene la montaña más alta del sistema solar, Olympus Mons, y evidencia de agua líquida en el pasado.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Satélites -->
+            <div class="gallery-category" data-category="satelites">
+                <h3>Satélites</h3>
+                <div class="gallery-container">
+                    <div class="gallery-item" data-title="Satélite Científico" data-description="Los satélites científicos como el Telescopio Espacial Hubble o James Webb realizan observaciones detalladas del universo, estudiando galaxias distantes, exoplanetas y la evolución cósmica. Proporcionan datos cruciales para entender el origen y la estructura del universo.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Cientifico.jpg'); background-size: cover; background-position: center;" aria-label="Imagen del telescopio espacial Hubble, satélite científico para observaciones astronómicas" role="img"></div>
+                        <div class="gallery-caption">Satélite Científico</div>
+                        <div class="gallery-description">Los satélites científicos como el Telescopio Espacial Hubble o James Webb realizan observaciones detalladas del universo, estudiando galaxias distantes, exoplanetas y la evolución cósmica. Proporcionan datos cruciales para entender el origen y la estructura del universo.</div>
+                    </div>
+                    <div class="gallery-item" data-title="Satélite de Comunicación" data-description="Estos satélites geoestacionarios transmiten señales de televisión, internet y telefonía global. Orbitan a 35,786 km sobre el ecuador, manteniendo una posición fija relativa a la Tierra, permitiendo cobertura continua de comunicaciones en todo el planeta.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Comunicacion.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de satélite de comunicación geoestacionario con antenas parabólicas" role="img"></div>
+                        <div class="gallery-caption">Satélite de Comunicación</div>
+                        <div class="gallery-description">Estos satélites geoestacionarios transmiten señales de televisión, internet y telefonía global. Orbitan a 35,786 km sobre el ecuador, manteniendo una posición fija relativa a la Tierra, permitiendo cobertura continua de comunicaciones en todo el planeta.</div>
+                    </div>
+                    <div class="gallery-item" data-title="CubeSat" data-description="Los CubeSats son satélites pequeños y estandarizados (10x10x10 cm) utilizados para investigación educativa y tecnológica. Son económicos de lanzar y permiten a universidades y empresas probar nuevas tecnologías en el espacio de manera accesible.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Cubesat.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de CubeSat pequeño y modular en órbita terrestre" role="img"></div>
+                        <div class="gallery-caption">CubeSat</div>
+                        <div class="gallery-description">Los CubeSats son satélites pequeños y estandarizados (10x10x10 cm) utilizados para investigación educativa y tecnológica. Son económicos de lanzar y permiten a universidades y empresas probar nuevas tecnologías en el espacio de manera accesible.</div>
+                    </div>
+                    <div class="gallery-item" data-title="Satélite Meteorológico" data-description="Estos satélites monitorean el clima terrestre, proporcionando datos para pronósticos precisos. Capturan imágenes infrarrojas y visibles de nubes, tormentas y patrones climáticos, ayudando a predecir huracanes, inundaciones y cambios climáticos globales.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Meteorologico.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de satélite meteorológico capturando imágenes de nubes y clima" role="img"></div>
+                        <div class="gallery-caption">Satélite Meteorológico</div>
+                        <div class="gallery-description">Estos satélites monitorean el clima terrestre, proporcionando datos para pronósticos precisos. Capturan imágenes infrarrojas y visibles de nubes, tormentas y patrones climáticos, ayudando a predecir huracanes, inundaciones y cambios climáticos globales.</div>
+                    </div>
+                    <div class="gallery-item" data-title="Satélite Militar" data-description="Los satélites militares proporcionan comunicaciones seguras, navegación precisa y vigilancia global. Incluyen sistemas como GPS militar y satélites de reconocimiento que ofrecen capacidades estratégicas para defensa nacional y operaciones internacionales.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Militar.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de satélite militar con antenas de comunicación segura" role="img"></div>
+                        <div class="gallery-caption">Satélite Militar</div>
+                        <div class="gallery-description">Los satélites militares proporcionan comunicaciones seguras, navegación precisa y vigilancia global. Incluyen sistemas como GPS militar y satélites de reconocimiento que ofrecen capacidades estratégicas para defensa nacional y operaciones internacionales.</div>
+                    </div>
+                    <div class="gallery-item" data-title="Satélite de Navegación" data-description="Sistemas como GPS, GLONASS y Galileo proporcionan posicionamiento global preciso. Estos satélites transmiten señales que permiten determinar ubicación, velocidad y tiempo con alta precisión, esenciales para navegación, mapas y aplicaciones móviles.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Navegacion.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de satélite de navegación GPS con antenas receptoras" role="img"></div>
+                        <div class="gallery-caption">Satélite de Navegación</div>
+                        <div class="gallery-description">Sistemas como GPS, GLONASS y Galileo proporcionan posicionamiento global preciso. Estos satélites transmiten señales que permiten determinar ubicación, velocidad y tiempo con alta precisión, esenciales para navegación, mapas y aplicaciones móviles.</div>
+                    </div>
+                    <div class="gallery-item" data-title="Satélite de Observación" data-description="Estos satélites capturan imágenes de alta resolución de la superficie terrestre para cartografía, agricultura y monitoreo ambiental. Proporcionan datos sobre deforestación, urbanización y recursos naturales, ayudando en la gestión sostenible del planeta.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Observacion.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de satélite de observación terrestre capturando imágenes de la superficie" role="img"></div>
+                        <div class="gallery-caption">Satélite de Observación</div>
+                        <div class="gallery-description">Estos satélites capturan imágenes de alta resolución de la superficie terrestre para cartografía, agricultura y monitoreo ambiental. Proporcionan datos sobre deforestación, urbanización y recursos naturales, ayudando en la gestión sostenible del planeta.</div>
+                    </div>
+                    <div class="gallery-item" data-title="Satélite de Pruebas Tecnológicas" data-description="Estos prototipos prueban nuevas tecnologías espaciales antes de su implementación en misiones operativas. Incluyen experimentos con propulsion, comunicaciones y sensores avanzados, acelerando el desarrollo de futuras capacidades espaciales.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Pruebas_Tecnologias.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de prototipo de satélite de pruebas tecnológicas en órbita" role="img"></div>
+                        <div class="gallery-caption">Satélite de Pruebas Tecnológicas</div>
+                        <div class="gallery-description">Estos prototipos prueban nuevas tecnologías espaciales antes de su implementación en misiones operativas. Incluyen experimentos con propulsion, comunicaciones y sensores avanzados, acelerando el desarrollo de futuras capacidades espaciales.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agujeros Negros -->
+            <div class="gallery-category" data-category="agujeros-negros">
+                <h3>Agujeros Negros</h3>
+                <div class="gallery-container">
+                    <div class="gallery-item" data-title="Agujero Negro Sagitario A*" data-description="Sagitario A* es el agujero negro supermasivo en el centro de nuestra galaxia, la Vía Láctea. Con una masa equivalente a 4.3 millones de soles, es uno de los objetos más extremos del universo. Fue la primera imagen directa de un agujero negro capturada por el Event Horizon Telescope en 2019.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Sagitario_A.jpg'); background-size: cover; background-position: center;" aria-label="Imagen del agujero negro Sagitario A* en el centro de la Vía Láctea" role="img"></div>
+                        <div class="gallery-caption">Sagitario A*</div>
+                        <div class="gallery-description">Sagitario A* es el agujero negro supermasivo en el centro de nuestra galaxia, la Vía Láctea. Con una masa equivalente a 4.3 millones de soles, es uno de los objetos más extremos del universo. Fue la primera imagen directa de un agujero negro capturada por el Event Horizon Telescope en 2019.</div>
+                    </div>
+                    <div class="gallery-item" data-title="Agujero Negro M87*" data-description="M87* es un agujero negro supermasivo en el centro de la galaxia Messier 87, ubicada a 55 millones de años luz de la Tierra. Tiene una masa de 6.5 mil millones de soles y fue el segundo agujero negro en ser fotografiado directamente. Su chorro relativista se extiende miles de años luz.">
+                        <div class="gallery-image" style="background-image: url('imagenes/M87.jpg'); background-size: cover; background-position: center;" aria-label="Imagen del agujero negro M87* con su chorro relativista" role="img"></div>
+                        <div class="gallery-caption">M87*</div>
+                        <div class="gallery-description">M87* es un agujero negro supermasivo en el centro de la galaxia Messier 87, ubicada a 55 millones de años luz de la Tierra. Tiene una masa de 6.5 mil millones de soles y fue el segundo agujero negro en ser fotografiado directamente. Su chorro relativista se extiende miles de años luz.</div>
+                    </div>
+                    <div class="gallery-item" data-title="Agujero Negro Estelar Cygnus X-1" data-description="Cygnus X-1 es un agujero negro estelar en la constelación del Cisne, formado por el colapso de una estrella masiva. Orbita alrededor de una estrella compañera supergigante azul, y es uno de los candidatos más fuertes a agujero negro estelar.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Cygnus.jpg'); background-size: cover; background-position: center;" aria-label="Imagen del sistema binario Cygnus X-1 con agujero negro estelar" role="img"></div>
+                        <div class="gallery-caption">Cygnus X-1</div>
+                        <div class="gallery-description">Cygnus X-1 es un agujero negro estelar en la constelación del Cisne, formado por el colapso de una estrella masiva. Orbita alrededor de una estrella compañera supergigante azul, y es uno de los candidatos más fuertes a agujero negro estelar.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estrellas -->
+            <div class="gallery-category" data-category="estrellas">
+                <h3>Estrellas</h3>
+                <div class="gallery-container">
+                    <div class="gallery-item" data-title="Sirio" data-description="Sirio es la estrella más brillante del cielo nocturno y el principal componente de la constelación del Can Mayor. Es una estrella binaria con una compañera enana blanca, ubicada a solo 8.6 años luz de la Tierra.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Sirio.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de la estrella Sirio, la más brillante del cielo" role="img"></div>
+                        <div class="gallery-caption">Sirio</div>
+                        <div class="gallery-description">Sirio es la estrella más brillante del cielo nocturno y el principal componente de la constelación del Can Mayor. Es una estrella binaria con una compañera enana blanca, ubicada a solo 8.6 años luz de la Tierra.</div>
+                    </div>
+                    <div class="gallery-item" data-title="Betelgeuse" data-description="Betelgeuse es una supergigante roja en la constelación de Orión, una de las estrellas más grandes conocidas. Está en las etapas finales de su vida y podría convertirse en supernova en cualquier momento.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Betelgeuse.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de la estrella Betelgeuse, supergigante roja" role="img"></div>
+                        <div class="gallery-caption">Betelgeuse</div>
+                        <div class="gallery-description">Betelgeuse es una supergigante roja en la constelación de Orión, una de las estrellas más grandes conocidas. Está en las etapas finales de su vida y podría convertirse en supernova en cualquier momento.</div>
+                    </div>
+                    <div class="gallery-item" data-title="Vega" data-description="Vega es la estrella más brillante de la constelación de Lyra y la quinta estrella más brillante del cielo nocturno. Es una estrella de tipo A con un disco de polvo circumestelar que indica formación planetaria.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Vega.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de la estrella Vega, estrella brillante de Lyra" role="img"></div>
+                        <div class="gallery-caption">Vega</div>
+                        <div class="gallery-description">Vega es la estrella más brillante de la constelación de Lyra y la quinta estrella más brillante del cielo nocturno. Es una estrella de tipo A con un disco de polvo circumestelar que indica formación planetaria.</div>
+                    </div>
+                    <div class="gallery-item" data-title="Sol" data-description="El Sol es una estrella de tipo G de secuencia principal en el centro de nuestro sistema solar. Tiene una masa de 1.989 × 10^30 kg y un radio de 696.340 km. Proporciona la energía necesaria para la vida en la Tierra.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Sol.jpg'); background-size: cover; background-position: center;" aria-label="Imagen del Sol, nuestra estrella" role="img"></div>
+                        <div class="gallery-caption">El Sol</div>
+                        <div class="gallery-description">El Sol es una estrella de tipo G de secuencia principal en el centro de nuestro sistema solar. Tiene una masa de 1.989 × 10^30 kg y un radio de 696.340 km. Proporciona la energía necesaria para la vida en la Tierra.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cometas -->
+            <div class="gallery-category" data-category="cometas">
+                <h3>Cometas</h3>
+                <div class="gallery-container">
+                    <div class="gallery-item" data-title="Cometa Halley" data-description="El Cometa Halley es uno de los cometas más famosos, visible desde la Tierra cada 76 años. Fue el primer cometa identificado como periódico y lleva el nombre del astrónomo Edmond Halley. Su última aparición fue en 1986.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Cometa_Halley.jpg'); background-size: cover; background-position: center;" aria-label="Imagen del Cometa Halley con su cola" role="img"></div>
+                        <div class="gallery-caption">Cometa Halley</div>
+                        <div class="gallery-description">El Cometa Halley es uno de los cometas más famosos, visible desde la Tierra cada 76 años. Fue el primer cometa identificado como periódico y lleva el nombre del astrónomo Edmond Halley. Su última aparición fue en 1986.</div>
+                    </div>
+                    <div class="gallery-item" data-title="Cometa Hale-Bopp" data-description="El Cometa Hale-Bopp fue uno de los cometas más brillantes del siglo XX, visible a simple vista durante 18 meses en 1996-1997. Fue descubierto independientemente por Alan Hale y Thomas Bopp.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Cometa_Hale_Bopp.jpg'); background-size: cover; background-position: center;" aria-label="Imagen del Cometa Hale-Bopp brillante" role="img"></div>
+                        <div class="gallery-caption">Cometa Hale-Bopp</div>
+                        <div class="gallery-description">El Cometa Hale-Bopp fue uno de los cometas más brillantes del siglo XX, visible a simple vista durante 18 meses en 1996-1997. Fue descubierto independientemente por Alan Hale y Thomas Bopp.</div>
+                    </div>
+                    <div class="gallery-item" data-title="Cometa NEOWISE" data-description="El Cometa NEOWISE (C/2020 F3) fue visible desde la Tierra en 2020. Fue descubierto por el telescopio espacial NEOWISE y pudo ser observado con binoculares desde áreas con poca contaminación lumínica.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Cometa_NEOWISE.jpg'); background-size: cover; background-position: center;" aria-label="Imagen del Cometa NEOWISE en el cielo nocturno" role="img"></div>
+                        <div class="gallery-caption">Cometa NEOWISE</div>
+                        <div class="gallery-description">El Cometa NEOWISE (C/2020 F3) fue visible desde la Tierra en 2020. Fue descubierto por el telescopio espacial NEOWISE y pudo ser observado con binoculares desde áreas con poca contaminación lumínica.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Asteroides -->
+            <div class="gallery-category" data-category="asteroides">
+                <h3>Asteroides</h3>
+                <div class="gallery-container">
+                    <div class="gallery-item" data-title="Asteroide Vesta" data-description="Vesta es el segundo asteroide más masivo del cinturón de asteroides. Tiene un diámetro de 525 km y es uno de los protoplanetas que no se convirtieron en planetas. Fue visitado por la sonda Dawn de la NASA.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Asteroide_Vesta.jpg'); background-size: cover; background-position: center;" aria-label="Imagen del asteroide Vesta con cráteres" role="img"></div>
+                        <div class="gallery-caption">Asteroide Vesta</div>
+                        <div class="gallery-description">Vesta es el segundo asteroide más masivo del cinturón de asteroides. Tiene un diámetro de 525 km y es uno de los protoplanetas que no se convirtieron en planetas. Fue visitado por la sonda Dawn de la NASA.</div>
+                    </div>
+                    <div class="gallery-item" data-title="Asteroide Ceres" data-description="Ceres es el asteroide más grande del cinturón de asteroides y el único clasificado como planeta enano. Tiene un diámetro de 940 km y representa aproximadamente el 25% de la masa total del cinturón de asteroides.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Asteroide_Ceres.jpg'); background-size: cover; background-position: center;" aria-label="Imagen del asteroide Ceres, planeta enano" role="img"></div>
+                        <div class="gallery-caption">Asteroide Ceres</div>
+                        <div class="gallery-description">Ceres es el asteroide más grande del cinturón de asteroides y el único clasificado como planeta enano. Tiene un diámetro de 940 km y representa aproximadamente el 25% de la masa total del cinturón de asteroides.</div>
+                    </div>
+                    <div class="gallery-item" data-title="Asteroide Bennu" data-description="Bennu es un asteroide cercano a la Tierra que fue visitado por la sonda OSIRIS-REx de la NASA. Tiene un diámetro de 490 metros y es considerado potencialmente peligroso debido a su órbita que lo acerca a la Tierra.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Asteroide_Bennu.jpg'); background-size: cover; background-position: center;" aria-label="Imagen del asteroide Bennu con superficie rocosa" role="img"></div>
+                        <div class="gallery-caption">Asteroide Bennu</div>
+                        <div class="gallery-description">Bennu es un asteroide cercano a la Tierra que fue visitado por la sonda OSIRIS-REx de la NASA. Tiene un diámetro de 490 metros y es considerado potencialmente peligroso debido a su órbita que lo acerca a la Tierra.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fenómenos Cósmicos -->
+            <div class="gallery-category" data-category="fenomenos">
+                <h3>Fenómenos Cósmicos</h3>
+                <div class="gallery-container">
+                    <div class="gallery-item" data-title="Aurora Boreal" data-description="La Aurora Boreal es un fenómeno natural de luces en el cielo nocturno, principalmente en las regiones polares. Es causada por la interacción de partículas solares con la atmósfera terrestre, creando espectaculares exhibiciones de colores.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Aurora_Boreal.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de la Aurora Boreal con luces verdes y púrpuras" role="img"></div>
+                        <div class="gallery-caption">Aurora Boreal</div>
+                        <div class="gallery-description">La Aurora Boreal es un fenómeno natural de luces en el cielo nocturno, principalmente en las regiones polares. Es causada por la interacción de partículas solares con la atmósfera terrestre, creando espectaculares exhibiciones de colores.</div>
+                    </div>
+                    <div class="gallery-item" data-title="Supernova" data-description="Una supernova es la explosión masiva al final de la vida de una estrella masiva. Libera enormes cantidades de energía y materia al espacio, creando elementos pesados y a veces remanentes como estrellas de neutrones o agujeros negros.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Supernova.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de una supernova explosiva" role="img"></div>
+                        <div class="gallery-caption">Supernova</div>
+                        <div class="gallery-description">Una supernova es la explosión masiva al final de la vida de una estrella masiva. Libera enormes cantidades de energía y materia al espacio, creando elementos pesados y a veces remanentes como estrellas de neutrones o agujeros negros.</div>
+                    </div>
+                    <div class="gallery-item" data-title="Lluvia de Meteoros" data-description="Una lluvia de meteoros ocurre cuando la Tierra pasa a través de un rastro de polvo dejado por un cometa. Las partículas entran en la atmósfera a alta velocidad, creando 'estrellas fugaces' visibles desde la Tierra.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Lluvia_Meteoritos.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de lluvia de meteoros en el cielo nocturno" role="img"></div>
+                        <div class="gallery-caption">Lluvia de Meteoros</div>
+                        <div class="gallery-description">Una lluvia de meteoros ocurre cuando la Tierra pasa a través de un rastro de polvo dejado por un cometa. Las partículas entran en la atmósfera a alta velocidad, creando 'estrellas fugaces' visibles desde la Tierra.</div>
+                    </div>
+                    <div class="gallery-item" data-title="Eclipse Solar" data-description="Un eclipse solar ocurre cuando la Luna se interpone entre la Tierra y el Sol, bloqueando parcial o totalmente la luz solar. Los eclipses totales crean un 'día nocturno' y permiten observar la corona solar.">
+                        <div class="gallery-image" style="background-image: url('imagenes/Eclipse_Solar.jpg'); background-size: cover; background-position: center;" aria-label="Imagen de eclipse solar total con corona visible" role="img"></div>
+                        <div class="gallery-caption">Eclipse Solar</div>
+                        <div class="gallery-description">Un eclipse solar ocurre cuando la Luna se interpone entre la Tierra y el Sol, bloqueando parcial o totalmente la luz solar. Los eclipses totales crean un 'día nocturno' y permiten observar la corona solar.</div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Modal para galería -->
+        <div id="gallery-modal" class="gallery-modal">
+            <div class="gallery-modal-content">
+                <span class="gallery-modal-close">&times;</span>
+                <div class="gallery-modal-image" id="modal-image"></div>
+                <div class="gallery-modal-info">
+                    <h3 id="modal-title"></h3>
+                    <p id="modal-description"></p>
+                </div>
+            </div>
+        </div>
+
+        </section>
+
+        <!-- Sección de Simulador de Órbitas -->
+        <section id="orbita">
+            <h2>Simulador de Órbitas Planetarias</h2>
+            <p>Observa cómo los planetas orbitan alrededor del sol según las leyes de Kepler. Haz clic en un planeta para ver curiosidades.</p>
+            <div class="orbit-simulator">
+                <div class="orbit-controls">
+                    <button id="startOrbit">Iniciar Simulación</button>
+                    <button id="pauseOrbit">Pausar</button>
+                    <button id="resetOrbit">Reiniciar</button>
+                </div>
+                <div class="orbit-canvas-container">
+                    <canvas id="orbitCanvas"></canvas>
+                </div>
+                <div class="planet-info">
+                    <h3>Información del Sistema Solar</h3>
+                    <p>Este simulador muestra las órbitas de todos los planetas del sistema solar. Observa cómo los planetas más cercanos al sol orbitan más rápido según la tercera ley de Kepler.</p>
+                </div>
+                <div class="planet-panels">
+                    <div class="planet-panel" id="mercury-panel">
+                        <h3>Mercurio</h3>
+                        <p><strong>Composición:</strong> Rocoso, con un núcleo de hierro grande.</p>
+                        <p><strong>Temperatura:</strong> De -173°C a 427°C.</p>
+                        <p><strong>Lunas:</strong> Ninguna.</p>
+                        <p><strong>Curiosidad:</strong> Es el planeta más pequeño y el más cercano al Sol. Un día en Mercurio dura 59 días terrestres.</p>
+                    </div>
+                    <div class="planet-panel" id="venus-panel">
+                        <h3>Venus</h3>
+                        <p><strong>Composición:</strong> Rocoso, con atmósfera densa de CO2.</p>
+                        <p><strong>Temperatura:</strong> 462°C promedio.</p>
+                        <p><strong>Lunas:</strong> Ninguna.</p>
+                        <p><strong>Curiosidad:</strong> Es el planeta más caliente debido al efecto invernadero. Gira en dirección opuesta a la mayoría de planetas.</p>
+                    </div>
+                    <div class="planet-panel" id="earth-panel">
+                        <h3>Tierra</h3>
+                        <p><strong>Composición:</strong> Rocoso, con océanos y atmósfera rica en oxígeno.</p>
+                        <p><strong>Temperatura:</strong> 15°C promedio.</p>
+                        <p><strong>Lunas:</strong> 1 (Luna).</p>
+                        <p><strong>Curiosidad:</strong> Es el único planeta conocido con vida. Tiene una atmósfera protectora y agua líquida.</p>
+                    </div>
+                    <div class="planet-panel" id="mars-panel">
+                        <h3>Marte</h3>
+                        <p><strong>Composición:</strong> Rocoso, con suelo rico en hierro.</p>
+                        <p><strong>Temperatura:</strong> -65°C promedio.</p>
+                        <p><strong>Lunas:</strong> 2 (Fobos y Deimos).</p>
+                        <p><strong>Curiosidad:</strong> Conocido como el "planeta rojo" por su color. Tiene la montaña más alta del sistema solar (Olympus Mons).</p>
+                    </div>
+                    <div class="planet-panel" id="jupiter-panel">
+                        <h3>Júpiter</h3>
+                        <p><strong>Composición:</strong> Gas gigante, principalmente hidrógeno y helio.</p>
+                        <p><strong>Temperatura:</strong> -110°C en la atmósfera superior.</p>
+                        <p><strong>Lunas:</strong> 95 (incluyendo las 4 galileanas: Ío, Europa, Ganímedes, Calisto).</p>
+                        <p><strong>Curiosidad:</strong> Es el planeta más grande. Tiene una Gran Mancha Roja, una tormenta gigante más grande que la Tierra.</p>
+                    </div>
+                    <div class="planet-panel" id="saturn-panel">
+                        <h3>Saturno</h3>
+                        <p><strong>Composición:</strong> Gas gigante, con anillos de hielo y roca.</p>
+                        <p><strong>Temperatura:</strong> -140°C promedio.</p>
+                        <p><strong>Lunas:</strong> 146 (incluyendo Titán, la más grande).</p>
+                        <p><strong>Curiosidad:</strong> Tiene los anillos más espectaculares. Es menos denso que el agua, por lo que flotaría si hubiera un océano lo suficientemente grande.</p>
+                    </div>
+                    <div class="planet-panel" id="uranus-panel">
+                        <h3>Urano</h3>
+                        <p><strong>Composición:</strong> Gigante de hielo, con metano y agua.</p>
+                        <p><strong>Temperatura:</strong> -195°C.</p>
+                        <p><strong>Lunas:</strong> 28 (incluyendo Miranda y Ariel).</p>
+                        <p><strong>Curiosidad:</strong> Gira de lado (eje inclinado 98°). Es el planeta más frío del sistema solar.</p>
+                    </div>
+                    <div class="planet-panel" id="neptune-panel">
+                        <h3>Neptuno</h3>
+                        <p><strong>Composición:</strong> Gigante de hielo, con vientos supersónicos.</p>
+                        <p><strong>Temperatura:</strong> -200°C.</p>
+                        <p><strong>Lunas:</strong> 16 (incluyendo Tritón).</p>
+                        <p><strong>Curiosidad:</strong> Tiene los vientos más rápidos del sistema solar (hasta 2,100 km/h). Fue el primer planeta descubierto por predicción matemática.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Calculadora de Peso -->
+        <section id="calculadora">
+            <h2>Calculadora de Peso en Otros Planetas</h2>
+            <p>Descubre cuánto pesarías en diferentes planetas del sistema solar.</p>
+            <div class="weight-calculator">
+                <div class="calculator-form">
+                    <div class="form-group">
+                        <label for="earthWeight">Tu peso en la Tierra (kg):</label>
+                        <input type="number" id="earthWeight" min="1" max="500" placeholder="Ej: 70">
+                    </div>
+                    <div class="form-group">
+                        <label for="planetSelect">Selecciona un planeta:</label>
+                        <select id="planetSelect">
+                            <option value="mercury">Mercurio</option>
+                            <option value="venus">Venus</option>
+                            <option value="mars">Marte</option>
+                            <option value="jupiter">Júpiter</option>
+                            <option value="saturn">Saturno</option>
+                            <option value="uranus">Urano</option>
+                            <option value="neptune">Neptuno</option>
+                            <option value="moon">Luna</option>
+                        </select>
+                    </div>
+                    <button class="calculate-btn" id="calculateWeight">Calcular Peso</button>
+                </div>
+                <div class="calculator-result" id="weightResult">
+                    <h3>Resultado:</h3>
+                    <p id="resultText"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Glosario -->
+        <section id="glosario">
+            <h2>Glosario de Términos Espaciales</h2>
+            <p>Consulta definiciones de términos importantes relacionados con la astronomía y la exploración espacial.</p>
+            <div class="glossary-container">
+                <div class="glossary-search">
+                    <input type="text" id="glossarySearch" placeholder="Buscar término...">
+                </div>
+                <div class="glossary-list">
+                    <div class="glossary-item">
+                        <div class="glossary-term">Astronomía</div>
+                        <div class="glossary-definition">Ciencia que estudia los cuerpos celestes del universo, incluidos planetas, estrellas, galaxias y fenómenos relacionados.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Órbita</div>
+                        <div class="glossary-definition">Trayectoria que describe un objeto alrededor de otro bajo la influencia de la gravedad.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Gravedad</div>
+                        <div class="glossary-definition">Fuerza de atracción entre objetos con masa. En el espacio, mantiene a los planetas en órbita alrededor de las estrellas.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Nebulosa</div>
+                        <div class="glossary-definition">Nube gigante de polvo y gas en el espacio. Algunas nebulosas son regiones donde nacen nuevas estrellas.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Agujero Negro</div>
+                        <div class="glossary-definition">Región del espacio con una gravedad tan intensa que nada, ni siquiera la luz, puede escapar de ella.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Galaxia</div>
+                        <div class="glossary-definition">Sistema masivo de estrellas, polvo interestelar, gas y materia oscura, unidos gravitacionalmente.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Telescopio</div>
+                        <div class="glossary-definition">Instrumento óptico que permite observar objetos distantes en el espacio, ampliando la luz para ver detalles lejanos.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Planeta</div>
+                        <div class="glossary-definition">Cuerpo celeste que orbita alrededor de una estrella y no produce luz propia, como la Tierra o Marte.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Estrella</div>
+                        <div class="glossary-definition">Esfera de plasma caliente que produce luz y calor mediante fusión nuclear en su núcleo.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Cometa</div>
+                        <div class="glossary-definition">Cuerpo celeste compuesto de hielo, polvo y roca que orbita el Sol y desarrolla una coma y cola cuando se acerca.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Asteroide</div>
+                        <div class="glossary-definition">Cuerpo rocoso pequeño que orbita el Sol, principalmente en el cinturón de asteroides entre Marte y Júpiter.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Constelación</div>
+                        <div class="glossary-definition">Grupo de estrellas que forman un patrón reconocible en el cielo nocturno, usado para navegación y mitología.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Satélite</div>
+                        <div class="glossary-definition">Objeto que orbita alrededor de un planeta o estrella, ya sea natural como la Luna o artificial como los GPS.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Exploración Espacial</div>
+                        <div class="glossary-definition">Actividad humana de investigar el espacio exterior mediante naves espaciales, telescopios y observatorios.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Sistema Solar</div>
+                        <div class="glossary-definition">El Sol y todos los cuerpos celestes que orbitan alrededor de él, incluyendo planetas, lunas y asteroides.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Big Bang</div>
+                        <div class="glossary-definition">Teoría que explica el origen del universo hace aproximadamente 13.8 mil millones de años a partir de una singularidad.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Meteorito</div>
+                        <div class="glossary-definition">Fragmento de roca o metal que sobrevive al paso a través de la atmósfera terrestre y llega a la superficie.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Eclipse</div>
+                        <div class="glossary-definition">Fenómeno astronómico en el que un cuerpo celeste se interpone entre otro y una fuente de luz, bloqueando parcialmente o totalmente la luz.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Aurora Boreal</div>
+                        <div class="glossary-definition">Luz natural en el cielo nocturno, principalmente en las regiones polares, causada por la interacción de partículas solares con la atmósfera terrestre.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Supernova</div>
+                        <div class="glossary-definition">Explosión masiva al final de la vida de una estrella masiva, liberando enormes cantidades de energía y materia al espacio.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Pulsar</div>
+                        <div class="glossary-definition">Estrella de neutrones que emite radiación electromagnética en pulsos regulares, como un faro cósmico.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Quasar</div>
+                        <div class="glossary-definition">Objeto astronómico extremadamente luminoso en el centro de algunas galaxias, alimentado por un agujero negro supermasivo.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Materia Oscura</div>
+                        <div class="glossary-definition">Materia invisible que no emite, absorbe ni refleja luz, pero cuya presencia se infiere por sus efectos gravitacionales en el universo.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Energía Oscura</div>
+                        <div class="glossary-definition">Fuerza hipotética que acelera la expansión del universo, constituyendo aproximadamente el 68% de la energía total del cosmos.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Exoplaneta</div>
+                        <div class="glossary-definition">Planeta que orbita alrededor de una estrella diferente al Sol, ubicado fuera de nuestro sistema solar.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Radiación Cósmica</div>
+                        <div class="glossary-definition">Radiación de alta energía proveniente del espacio exterior, compuesta principalmente de protones y núcleos atómicos.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Campo Magnético</div>
+                        <div class="glossary-definition">Región del espacio donde se manifiesta la fuerza magnética, importante para proteger planetas como la Tierra de la radiación solar.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Ionosfera</div>
+                        <div class="glossary-definition">Capa de la atmósfera terrestre ionizada por la radiación ultravioleta solar, que refleja las ondas de radio.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Atmósfera</div>
+                        <div class="glossary-definition">Capa de gases que rodea un planeta o estrella, esencial para la vida en la Tierra al regular la temperatura y proteger contra la radiación.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Cráter</div>
+                        <div class="glossary-definition">Depresión circular en la superficie de un planeta o luna, generalmente causada por el impacto de un meteorito.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Lava Lunar</div>
+                        <div class="glossary-definition">Roca fundida que fluyó en la superficie de la Luna hace miles de millones de años, formando mares lunares.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Rocas Lunares</div>
+                        <div class="glossary-definition">Muestras de roca traídas de la Luna por misiones espaciales, que proporcionan información sobre la historia geológica de nuestro satélite.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Agua en Marte</div>
+                        <div class="glossary-definition">Evidencia de agua líquida o hielo en Marte, tanto en el pasado como en la actualidad, crucial para la posibilidad de vida.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Anillos de Saturno</div>
+                        <div class="glossary-definition">Sistema de anillos compuestos de hielo y roca que orbitan alrededor de Saturno, uno de los rasgos más distintivos del planeta.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Lunas de Júpiter</div>
+                        <div class="glossary-definition">Los cuatro satélites principales de Júpiter (Ío, Europa, Ganímedes y Calisto) descubiertos por Galileo, cada uno con características únicas.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Plutón</div>
+                        <div class="glossary-definition">Planeta enano en el borde del sistema solar, anteriormente considerado el noveno planeta, con una órbita elíptica y una luna llamada Caronte.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Telescopio Espacial</div>
+                        <div class="glossary-definition">Instrumento óptico colocado en órbita terrestre para observar el universo sin interferencia de la atmósfera.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Nave Espacial</div>
+                        <div class="glossary-definition">Vehículo diseñado para viajar al espacio exterior, utilizado para exploración, investigación o transporte de carga.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Astronauta</div>
+                        <div class="glossary-definition">Persona entrenada para viajar al espacio, realizar experimentos y mantener sistemas en naves espaciales.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Estación Espacial</div>
+                        <div class="glossary-definition">Estructura habitable en órbita terrestre utilizada para investigación científica y observación del espacio.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Lanzamiento</div>
+                        <div class="glossary-definition">Proceso de propulsar una nave espacial desde la Tierra hacia el espacio utilizando cohetes.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Órbita Geoestacionaria</div>
+                        <div class="glossary-definition">Órbita circular a 35,786 km sobre el ecuador terrestre donde un satélite orbita a la misma velocidad que la rotación de la Tierra.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Órbita Baja Tierra</div>
+                        <div class="glossary-definition">Órbita cercana a la Tierra, típicamente entre 160 y 2,000 km de altitud, utilizada por la mayoría de los satélites y la Estación Espacial Internacional.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Satélite Geoestacionario</div>
+                        <div class="glossary-definition">Satélite que permanece fijo sobre un punto de la Tierra, utilizado principalmente para comunicaciones y televisión.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Satélite de Baja Órbita</div>
+                        <div class="glossary-definition">Satélite que orbita a altitudes bajas, ofreciendo baja latencia pero requiriendo múltiples satélites para cobertura global.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Misión Apolo</div>
+                        <div class="glossary-definition">Programa espacial estadounidense que logró el primer alunizaje tripulado en 1969 con la misión Apolo 11.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Programa Soyuz</div>
+                        <div class="glossary-definition">Programa espacial soviético/ruso para naves tripuladas, utilizado para transportar astronautas a la Estación Espacial Internacional.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Cohete</div>
+                        <div class="glossary-definition">Vehículo propulsado por motores de reacción que genera empuje mediante la expulsión de gases calientes.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Propulsión</div>
+                        <div class="glossary-definition">Método de generar fuerza para mover una nave espacial, incluyendo cohetes químicos, eléctricos o nucleares.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Combustible</div>
+                        <div class="glossary-definition">Sustancia química o material utilizado en motores de cohetes para generar energía y propulsión.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Gravedad Cero</div>
+                        <div class="glossary-definition">Estado de ingravidez experimentado en órbita donde la gravedad es contrarrestada por la velocidad orbital.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Microgravedad</div>
+                        <div class="glossary-definition">Condición similar a la gravedad cero donde los efectos gravitacionales son muy débiles, común en órbita terrestre.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Radiación Solar</div>
+                        <div class="glossary-definition">Radiación electromagnética emitida por el Sol, incluyendo luz visible, ultravioleta e infrarroja.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Viento Solar</div>
+                        <div class="glossary-definition">Flujo continuo de partículas cargadas emitidas por el Sol que interactúa con los campos magnéticos planetarios.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Magnetosfera</div>
+                        <div class="glossary-definition">Región del espacio alrededor de un planeta dominada por su campo magnético, que protege contra el viento solar.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Atmósfera Terrestre</div>
+                        <div class="glossary-definition">Capa de gases que rodea la Tierra, compuesta principalmente de nitrógeno y oxígeno, esencial para la vida.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+        <!-- Sección de Política de Privacidad -->
+        <section id="privacidad">
+            <h2>Política de Privacidad</h2>
+            <div class="privacy-content">
+                <h3>Introducción</h3>
+                <p>En Explora el Espacio, valoramos tu privacidad y nos comprometemos a proteger tu información personal. Esta política de privacidad explica cómo recopilamos, usamos y protegemos tu información cuando visitas nuestra aplicación educativa sobre astronomía.</p>
+
+                <h3>Información que Recopilamos</h3>
+                <p>Nuestra aplicación es una página web estática que no requiere registro ni recopila datos personales. Sin embargo, podemos recopilar información automáticamente a través de:</p>
+                <ul>
+                    <li><strong>Datos de navegación:</strong> Información sobre cómo interactúas con la aplicación, como páginas visitadas y tiempo de permanencia.</li>
+                    <li><strong>Cookies:</strong> Pequeños archivos de texto almacenados en tu dispositivo para mejorar la experiencia de usuario.</li>
+                    <li><strong>Datos técnicos:</strong> Información sobre tu navegador, sistema operativo y dirección IP (anónima).</li>
+                </ul>
+
+                <h3>Uso de la Información</h3>
+                <p>Utilizamos la información recopilada para:</p>
+                <ul>
+                    <li>Mejorar la funcionalidad y contenido de la aplicación.</li>
+                    <li>Analizar el uso de la aplicación para fines estadísticos.</li>
+                    <li>Garantizar la seguridad y el correcto funcionamiento de la aplicación.</li>
+                </ul>
+
+                <h3>Cookies</h3>
+                <p>Utilizamos cookies para:</p>
+                <ul>
+                    <li>Recordar tus preferencias (como el modo oscuro).</li>
+                    <li>Mejorar el rendimiento de la aplicación.</li>
+                    <li>Analizar el tráfico web.</li>
+                </ul>
+                <p>Puedes gestionar las cookies a través de la configuración de tu navegador.</p>
+
+                <h3>Compartir Información</h3>
+                <p>No vendemos, alquilamos ni compartimos tu información personal con terceros, excepto cuando sea necesario para:</p>
+                <ul>
+                    <li>Cumplir con obligaciones legales.</li>
+                    <li>Proteger nuestros derechos y propiedad.</li>
+                    <li>Prevenir actividades fraudulentas o ilegales.</li>
+                </ul>
+
+                <h3>Seguridad</h3>
+                <p>Implementamos medidas de seguridad técnicas y organizativas para proteger tu información contra acceso no autorizado, alteración, divulgación o destrucción.</p>
+
+                <h3>Derechos del Usuario</h3>
+                <p>Tienes derecho a:</p>
+                <ul>
+                    <li>Acceder a la información que tenemos sobre ti.</li>
+                    <li>Solicitar la corrección o eliminación de tus datos.</li>
+                    <li>Oponerte al procesamiento de tus datos.</li>
+                    <li>Solicitar la portabilidad de tus datos.</li>
+                </ul>
+                <p>Para ejercer estos derechos, contáctanos a través de la información proporcionada al final de esta política.</p>
+
+                <h3>Cambios en la Política de Privacidad</h3>
+                <p>Podemos actualizar esta política de privacidad periódicamente. Te notificaremos sobre cambios significativos publicando la nueva política en esta página con una fecha de "última actualización".</p>
+
+                <h3>Contacto</h3>
+                <p>Si tienes preguntas sobre esta política de privacidad, puedes contactarnos en:</p>
+                <p><strong>Email:</strong> luisfernando.ortegarobles.cb282@gmail.com</p>
+                <p><strong>Dirección:</strong> [Tu dirección aquí]</p>
+
+                <p><em>Última actualización: 19/10/2025</em></p>
+            </div>
+        </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <img src="imagenes/Logo.png" alt="Logo de Explora el Espacio" class="footer-logo">
+            <p>&copy; 2024 Explora el Espacio. Todos los derechos reservados.</p>
+            <p>Aplicación educativa sobre astronomía y exploración espacial.</p>
+            <div class="footer-links">
+                <a href="#" aria-label="Política de privacidad">Política de Privacidad</a> |
+                <a href="#" aria-label="Términos de uso">Términos de Uso</a> |
+                <a href="#" aria-label="Contacto">Contacto</a>
+            </div>
+        </div>
+    </footer>
 </body>
-</html>
